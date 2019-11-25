@@ -1,5 +1,5 @@
 let mysql = require('mysql2');
-let secret = require('./db-secret');
+// let secret = require('./db-secret');
 
 function createCon(credentials) {
     let connection = mysql.createConnection({

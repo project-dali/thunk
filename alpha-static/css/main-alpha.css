@@ -29,6 +29,11 @@ h1 {
   text-align: center;
 }
 
+h2 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
 /* ! Remove these styles once alpha is built */
 #tempNav {
   background-color: #000;
@@ -76,4 +81,18 @@ main {
   font-size: 2.75rem;
   line-height: 2;
   text-align: center;
+}
+
+button {
+  min-width: 25rem;
+  height: 5rem;
+
+  /* clear defaults */
+  background: none;
+  box-shadow: none;
+  border: none;
+
+  background-color: var(--gray-bg-color, lightgrey);
+  font-size: 2.75rem;
+  margin: 3rem 0;
 }

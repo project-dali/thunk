@@ -6,6 +6,18 @@
 
 :root {
   --gray-bg-color: #F1F1F1;
+  --pl-red: #EB5757;
+  --pl-orange: #F2994A;
+  --pl-yellow: #F2C94C;
+  --pl-green: #219653;
+  --pl-blue: #2F80ED;
+  --pl-mediumBlue: #2D9CDB;
+  --pl-lightGreen: #6FCF97;
+  --pl-purple: #A157FF;
+  --pl-magenta: #F25AF5;
+  --pl-teal: #62EDE5;
+  --pl-lime: #DAEB70;
+  --pl-violet: #6F4FED;
 }
 
 html {
@@ -32,6 +44,11 @@ h1 {
 h2 {
   font-size: 3.5rem;
   margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 2rem;
+  font-weight: 400;
 }
 
 /* ! Remove these styles once alpha is built */
@@ -70,7 +87,7 @@ main {
 }
 
 .box-gray {
-  background-color: var(--gray-bg-color, lightgrey); 
+  background-color: var(--gray-bg-color, LightGrey); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -94,7 +111,7 @@ main {
 
 #code {
   width: 40rem;
-  margin: 10rem 0 5rem;
+  margin: 3rem 0;
 }
 
 #code > p {
@@ -103,22 +120,23 @@ main {
 }
 
 button {
-  min-width: 25rem;
-  height: 5rem;
+  min-width: 20rem;
+  /*! height: 5rem; */
 
   /* clear defaults */
   background: none;
   box-shadow: none;
   border: none;
 
-  background-color: var(--gray-bg-color, lightgrey);
-  font-size: 2.75rem;
-  margin: 3rem 0;
+  background-color: var(--gray-bg-color, LightGrey);
+  font-size: 2.5rem;
+  margin: 2rem 0;
+  padding: 1rem 3rem;
 }
 
 #connected-players {
   max-width: 90%;
-  height: 12.5rem;
+  height: 17rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -128,20 +146,45 @@ button {
 
 .player {
   width: 8rem;
-  margin: 0 1rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 1rem;
 }
 
 .pl-avi {
   content: "";
   display: block;
-  width: 6.25rem;
-  height: 6.25rem;
+  width: 5.25rem;
+  height: 5.25rem;
   background-color: #000;
   margin-bottom: .25rem;
   border-radius: 50%;
+}
+
+#player-1 > .pl-avi {
+  background-color: var(--pl-red, Red);
+}
+#player-2 > .pl-avi {
+  background-color: var(--pl-orange, Orange);
+}
+#player-3 > .pl-avi {
+  background-color: var(--pl-yellow, Yellow);
+}
+#player-4 > .pl-avi {
+  background-color: var(--pl-green, Green);
+}
+#player-5 > .pl-avi {
+  background-color: var(--pl-blue, Blue);
+}
+#player-6 > .pl-avi {
+  background-color: var(--pl-mediumBlue, CornflowerBlue);
+}
+#player-7 > .pl-avi {
+  background-color: var(--pl-lightGreen, LightGreen);
+}
+#player-8 > .pl-avi {
+  background-color: var(--pl-purple, Purple);
 }
 
 .pl-name {

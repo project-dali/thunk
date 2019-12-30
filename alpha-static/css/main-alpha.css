@@ -164,6 +164,7 @@ button {
   border-radius: 50%;
 }
 
+/* ! Remove this once avatar selection feauture is created */
 #player-1 > .pl-avi {
   background-color: var(--pl-red, Red);
 }
@@ -188,6 +189,7 @@ button {
 #player-8 > .pl-avi {
   background-color: var(--pl-purple, Purple);
 }
+/* ! ------------------------------------------------- */
 
 .pl-name {
   font-weight: bold;
@@ -227,4 +229,14 @@ button {
   height: 100%;
   width: 100%;
   background-color: var(--thunk-pink, pink);
+}
+
+#resp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 80%;
+  max-width: 60rem;
+  grid-gap: 1rem;
+  margin-top: 3rem;
+  align-items: center;
 }

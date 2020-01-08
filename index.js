@@ -29,7 +29,7 @@ const initializeJSON = (location, data) => {
 initializeJSON('data.json', jsonInit);
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/landing.html');
 });
 
 app.get('/host', function (req, res) {
@@ -38,6 +38,14 @@ app.get('/host', function (req, res) {
 
 app.get('/data', function (req, res) {
     res.sendFile(__dirname + '/data.json');
+});
+
+app.get('/create', function (req, res) {
+    res.sendFile(__dirname + '/create.html');
+});
+
+app.get('/join', function (req, res) {
+    res.sendFile(__dirname + '/join.html');
 });
 
 app.use('/static', express.static(__dirname + '/public'));

@@ -6,6 +6,7 @@
 
 :root {
   --gray-bg-color: #F1F1F1;
+  --gray-bg-hover: #c2c2c2;
   --dark-gray: #333;
   --pl-red: #EB5757;
   --pl-orange: #F2994A;
@@ -136,6 +137,15 @@ button {
   font-size: 2.5rem;
   margin: 2rem 0;
   padding: 1rem 3rem;
+}
+
+button:hover, button:active, button:focus {
+  cursor: pointer;
+  background-color: var(--gray-bg-hover, gray);
+}
+
+button:focus {
+  outline: 5px solid var(--thunk-pink, pink);
 }
 
 #connected-players {
@@ -378,3 +388,5 @@ button {
 .tm-role {
   list-style: none;
 }
+
+/* * -------- Player Screen Styles -------- */

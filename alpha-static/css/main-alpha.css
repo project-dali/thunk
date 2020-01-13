@@ -89,6 +89,7 @@ main {
   flex-direction: column;
   align-items: center;
   padding-top: var(--main-padding);
+  position: relative;
 }
 
 .box-gray {
@@ -390,3 +391,168 @@ button:focus {
 }
 
 /* * -------- Player Screen Styles -------- */
+@media screen and (max-width: 26rem) {
+  h1 {
+    font-size: 3.5rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    margin-bottom: .5rem;
+  }
+
+  .input-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  input[type=text] {
+    width: 13.75rem;
+    height: 2.625rem;
+    background-color: var(--gray-bg-color, LightGrey);
+    border: none;
+    border: 2px solid #000;
+
+    text-align: center;
+    font-size: 1.5rem;
+    position: relative;
+  }
+
+  input[type=text]:focus {
+    outline: 3px solid #000;
+  }
+
+  input[type=text]:invalid {
+    outline: 4px solid var(--pl-red, red);
+  }
+
+  input[type=submit] {
+    width: 15rem;
+
+    /* Clear defaults */
+    background: none;
+    box-shadow: none;
+    border: none;
+
+    background-color: var(--gray-bg-color, LightGrey);
+    font-size: 2rem;
+    padding: .5rem;
+  }
+
+  input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
+    outline: 3px solid var(--thunk-pink, pink);
+    cursor: pointer;
+    background-color: var(--gray-bg-hover, gray);
+  }
+
+  #avi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .avi-opt {
+    --avi-sel-size: 4.5rem;
+    display: block;
+    position: relative;
+    width: var(--avi-sel-size);
+    height: var(--avi-sel-size);
+    /* background-color: #000; */
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Hide browswer default radio */
+  .avi-opt input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  /* Create custom radio */
+  .avi-check {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--avi-sel-size);
+    width: var(--avi-sel-size);
+    background-color: #eee;
+    border-radius: 50%;
+  }
+
+  #avi-red ~ .avi-check {
+    background-color: var(--pl-red, red);
+  }
+
+  #avi-orange ~ .avi-check {
+    background-color: var(--pl-orange, orange);
+  }
+
+  #avi-yellow ~ .avi-check {
+    background-color: var(--pl-yellow, yellow);
+  }
+
+  #avi-green ~ .avi-check {
+    background-color: var(--pl-green, green);
+  }
+
+  #avi-blue ~ .avi-check {
+    background-color: var(--pl-blue, blue);
+  }
+
+  #avi-mediumBlue ~ .avi-check {
+    background-color: var(--pl-mediumBlue, CornflowerBlue);
+  }
+
+  #avi-lightGreen ~ .avi-check {
+    background-color: var(--pl-lightGreen, LightGreen);
+  }
+
+  #avi-purple ~ .avi-check {
+    background-color: var(--pl-purple, Purple)
+  }
+
+  #avi-magenta ~ .avi-check {
+    background-color: var(--pl-magenta, magenta);
+  }
+
+  #avi-teal ~ .avi-check {
+    background-color: var(--pl-teal, teal);
+  }
+
+  #avi-lime ~ .avi-check {
+    background-color: var(--pl-lime, lime);
+  }
+
+  #avi-violet ~ .avi-check {
+    background-color: var(--pl-violet, violet);
+  }
+
+  .avi-opt input:checked ~.avi-check {
+    border: 8px solid rgba(0,0,0,.5);
+  }
+
+  .pl-submit {
+    position: absolute;
+    bottom: 2rem;
+    transform-origin: center;
+  }
+
+  #pl-instructions {
+    width: 80%;
+    margin-left: 1.2rem;
+    margin-top: 1rem;
+  }
+
+  #pl-instructions li {
+    margin-bottom: .5rem;
+  }
+}

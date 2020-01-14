@@ -4,6 +4,11 @@ const fs = require('fs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
+const htmlDir = '/html';
+const commonDir = '/common';
+const playerDir = '/player';
+const masterDir = '/master';
+
 let round = 0;
 let rndResponses = 0;
 let jsonDataGlobal = '';
@@ -28,27 +33,27 @@ const initializeJSON = (location, data) => {
 
 initializeJSON('data.json', jsonInit);
 
+app.use('/static', express.static(__dirname + '/public'));
+
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/landing.html');
-});
-
-app.get('/host', function (req, res) {
-    res.sendFile(__dirname + '/host.html');
-});
-
-app.get('/data', function (req, res) {
-    res.sendFile(__dirname + '/data.json');
+    res.sendFile(__dirname + htmlDir + commonDir + '/landing.html');
 });
 
 app.get('/create', function (req, res) {
-    res.sendFile(__dirname + '/create.html');
+    res.sendFile(__dirname + htmlDir + masterDir + '/create.html');
 });
 
 app.get('/join', function (req, res) {
-    res.sendFile(__dirname + '/join.html');
+    res.sendFile(__dirname + htmlDir + playerDir + '/join.html');
 });
 
-app.use('/static', express.static(__dirname + '/public'));
+app.get('/avatar', function (req, res) {
+    res.sendFile(__dirname + htmlDir + playerDir + '/avatar.html');
+});
+
+app.get('/wait-start', function (req, res) {
+    res.sendFile(__dirname + htmlDir + playerDir + '/wait-start.html');
+});
 
 io.on('connection', function (socket) {
     // console.log('a user connected');

@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=7">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>Thunk</title>
     <link rel="stylesheet" type="text/css" href="/static/main.css">
     <!-- <script src="/socket.io/socket.io.js"></script> -->
 
-    <style>        
-        h1 {            
+    <style>
+        h1 {
             font-size: 2.8rem;
             margin: 1.5rem 0;
             text-align: center;
         }
+
         main div.callout {
             margin: 0 auto;
             max-width: 30rem;
             width: 80%;
         }
+
         main div.callout button {
             font-size: 2rem;
             margin: 1rem auto;
@@ -30,6 +33,7 @@
         }
     </style>
 </head>
+
 <body>
     <main>
         <h1>Thunk</h1>
@@ -37,35 +41,36 @@
             <button class="join">Join Game</button>
             <button class="create">Create Game</button>
         </div>
+        <h2>How to Play</h2>
+        <div id="instructions" class="box-gray">
+            <p>Go to <b>thunk.fun</b> on your player device
+                Enter room code and join the game</p>
+        </div>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded',function(){
+        document.addEventListener('DOMContentLoaded', function () {
 
             let joinBtn = document.querySelector('div.callout button.join');
             let createBtn = document.querySelector('div.callout button.create');
 
-            const requestCreateGame = () =>{
-                // socket.emit('request new game');    
-                console.log('creating game')
+            const requestCreateView = () => {
                 window.location.href = '/create';
             }
-            const requestJoinGame = () =>{
-                // socket.emit('request new game');
-                console.log('joining game')
-
+            const requestJoinView = () => {
                 window.location.href = '/join';
             }
 
-            joinBtn.addEventListener('click', () =>{
-                requestJoinGame();
+            joinBtn.addEventListener('click', () => {
+                requestJoinView();
             });
 
-            createBtn.addEventListener('click', () =>{
-                requestCreateGame();
+            createBtn.addEventListener('click', () => {
+                requestCreateView();
             });
 
         });
     </script>
 </body>
+
 </html>

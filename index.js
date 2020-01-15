@@ -18,7 +18,6 @@ const jsonInit = {
 const db = require('./db');
 const secret = require('./db-secret');
 
-
 let connection = db.createCon(secret.dbCredentials);
 let query = '';
 
@@ -36,27 +35,37 @@ initializeJSON('data.json', jsonInit);
 app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + htmlDir + commonDir + '/landing.html');
+    res.sendFile(__dirname + htmlDir + '/landing.html');
 });
 
-app.get('/create', function (req, res) {
-    res.sendFile(__dirname + htmlDir + masterDir + '/create.html');
-});
-
-app.get('/join', function (req, res) {
-    res.sendFile(__dirname + htmlDir + playerDir + '/join.html');
-});
-
-app.get('/avatar', function (req, res) {
-    res.sendFile(__dirname + htmlDir + playerDir + '/avatar.html');
-});
-
-app.get('/wait-start', function (req, res) {
-    res.sendFile(__dirname + htmlDir + playerDir + '/wait-start.html');
-});
+/**
+ * generates a random 8 digit numeric deviceID
+ * @returns string
+ */
+const createDeviceID = () => {
+    let deviceID = '';
+    for (let i = 0; i < 8; i++) {
+        deviceID += String(Math.floor(Math.random() * 10));
+    }
+    return deviceID;
+}
 
 io.on('connection', function (socket) {
-    // console.log('a user connected');
+
+    // generate deviceID
+    let deviceID = createDeviceID();
+    // set deviceID in db
+    query = '';
+    query += 'INSERT INTO thunk.device (id)';
+    query += `VALUES (${deviceID})`
+    // send query to db
+    // if value is already used, generate a new one    
+
+    socket.on('join game', function () {
+        // emit the room join page back to the socket
+        socket.emit('advance: join form', deviceID);
+    })
+
     socket.on('chat message', function (msg) {
 
         //increment index of total user responses in this round

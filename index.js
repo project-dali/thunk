@@ -63,7 +63,7 @@ io.on('connection', function (socket) {
 
     socket.on('join game', function () {
         // emit the room join page back to the socket
-        socket.emit('advance: join form', deviceID);
+        socket.emit('advance to: join form', deviceID);
     })
 
     socket.on('chat message', function (msg) {

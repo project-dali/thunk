@@ -1,26 +1,26 @@
 {
-    "env": {
-        "es6": true,
-        "browser": true
-    },
-    "extends": "eslint:recommended",
-    "globals": {
-        "require": true,
-        "module": true,
-        "$": true
-    },
-    "rules": {
-        "no-console": 0,
-        "no-global-assign": [
-            "error",
-            {
-                "exceptions": ["Object"]
-            }
-        ],
-        "no-unused-vars": ["warn"],
-        "indent": ["error", "tab"],
-        "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "single"],
-        "semi": ["error", "always"]
-    }
+	"env": {
+		"es6": true,
+		"browser": true
+	},
+	"extends": "eslint:recommended",
+	"globals": {
+		"require": true,
+		"module": true,
+		"$": true
+	},
+	"rules": {
+		"no-console": 0,
+		"no-global-assign": [
+			"warn",
+			{
+				"exceptions": ["Object"]
+			}
+		],
+		"no-unused-vars": ["warn"],
+		"indent": ["warn", "tab"],
+		"linebreak-style": ["error", "unix"],
+		"quotes": ["warn", "single"],
+		"semi": ["error", "always"]
+	}
 }

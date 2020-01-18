@@ -6,9 +6,6 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
 const htmlDir = '/html';
-const commonDir = '/common';
-const playerDir = '/player';
-const masterDir = '/master';
 
 let round = 0;
 let rndResponses = 0;
@@ -18,9 +15,7 @@ const jsonInit = {
 };
 const db = require('./db');
 const secret = require('./db-secret');
-
 let connection = db.createCon(secret.dbCredentials);
-let query = '';
 
 const initializeJSON = (location, data) => {
 	try {
@@ -53,15 +48,34 @@ const createDeviceID = () => {
 };
 
 io.on('connection', function (socket) {
-
-	// generate deviceID
+	console.log('new connection');
+	console.log('');
+	const createDeviceEntry = (deviceID) => {
+		let query = 'INSERT INTO thunk.device (id)';
+		query += `VALUES (${deviceID});`;
+		// console.log(query);
+		db.sendQuery(query, connection, (err, results) => {
+			// console.log(err);
+			if (err) {
+				if (err.errno === 1062) {
+					// console.log('duplicate entry');
+					deviceID = createDeviceID();
+					console.log('recursively generate device ID: ' + deviceID);
+					// return createDeviceEntry(deviceID);
+				}
+				throw err;
+			}
+			// console.log(results);
+			// console.log('');
+			return deviceID;
+		});
+	};
 	let deviceID = createDeviceID();
-	// set deviceID in db
-	query = '';
-	query += 'INSERT INTO thunk.device (id)';
-	query += `VALUES (${deviceID})`;
-	// send query to db
-	// if value is already used, generate a new one    
+	deviceID = createDeviceEntry(deviceID);
+
+	socket.on('disconnect', function () {
+		// console.log('user disconnected');
+	});
 
 	socket.on('join game', function () {
 		// emit the room join page back to the socket
@@ -114,7 +128,7 @@ io.on('connection', function (socket) {
 
 		rndResponses = 0;
 
-		query = `SELECT * FROM prompt
+		let query = `SELECT * FROM prompt
         ORDER BY RAND()
         LIMIT 1`;
 		db.sendQuery(query, connection, (results) => {
@@ -165,10 +179,6 @@ io.on('connection', function (socket) {
 
 		io.emit('chat message', responseMsg);
 		io.emit('take survey');
-	});
-
-	socket.on('disconnect', function () {
-		// console.log('user disconnected');
 	});
 
 });

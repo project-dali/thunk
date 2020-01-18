@@ -14,10 +14,10 @@ function createCon(credentials) {
 
 function sendQuery(query, connection, callback) {
 	connection.query(query, function (err, results) { // add fields param if desired
-		if (err) throw err;
+		// if (err) throw err;
 		// console.log(results); // results contains rows returned by server
 		// console.log(fields); // fields contains extra meta data about results, if available    
-		callback(results);
+		callback(err, results);
 	});
 }
 

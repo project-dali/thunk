@@ -1,6 +1,8 @@
 /*eslint-env node */
 const express = require('express');
 const app = express();
+app.set('view engine', 'nunjucks');
+
 const fs = require('fs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
@@ -11,10 +13,18 @@ const db = require('./db');
 const secret = require('./db-secret');
 let connection = db.createCon(secret.dbCredentials);
 
+const nunjucks = require('nunjucks');
+nunjucks.configure('views', {
+	autoescape: true,
+	express: app
+});
+nunjucks.configure('views', { autoescape: true });
+
 app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-	res.sendFile(__dirname + htmlDir + '/landing.html');
+	// res.sendFile(__dirname + htmlDir + '/landing.html');
+	res.render('index.njk');
 });
 
 /**
@@ -31,32 +41,33 @@ const createDeviceID = () => {
 
 io.on('connection', function (socket) {
 	console.log('new connection');
-	console.log(socket);
-	const createDeviceEntry = (deviceID) => {
+	const createDeviceEntry = (__deviceID) => {
 		let query = 'INSERT INTO thunk.device (id)';
-		query += `VALUES (${deviceID});`;
-		// console.log(query);
+		query += `VALUES (${__deviceID});`;
 		db.sendQuery(query, connection, (err, results) => {
-			// console.log(err);
-			if (err) {
+			if (err) { // if duplicate entry, make a new code and try again
 				if (err.errno === 1062) {
-					// console.log('duplicate entry');
-					deviceID = createDeviceID();
-					console.log('recursively generate device ID: ' + deviceID);
-					// return createDeviceEntry(deviceID);
+					__deviceID = createDeviceID();
+					createDeviceEntry(__deviceID);
 				}
 				throw err;
 			}
-			// console.log(results);
-			// console.log('');
-			return deviceID;
+			return __deviceID;
 		});
+		return __deviceID;
 	};
-	let deviceID = createDeviceID();
-	deviceID = createDeviceEntry(deviceID);
+
+	let deviceID = createDeviceEntry(createDeviceID());
+	socket.emit('test', deviceID);
 
 	socket.on('disconnect', function () {
-		// console.log('user disconnected');
+		let query = 'DELETE FROM thunk.device ';
+		query += `WHERE id=${deviceID};`;
+		db.sendQuery(query, connection, (err, results) => {
+			if (err) {
+				throw err;
+			}
+		});
 	});
 
 	socket.on('join game', function () {
@@ -64,54 +75,54 @@ io.on('connection', function (socket) {
 		socket.emit('advance to: join form', deviceID);
 	});
 
-	socket.on('new round', function () {
+	// socket.on('new round', function () {
 
-		rndResponses = 0;
+	// 	rndResponses = 0;
 
-		let query = `SELECT * FROM prompt
-        ORDER BY RAND()
-        LIMIT 1`;
-		db.sendQuery(query, connection, (results) => {
-			// console.log(results)
-			let now = new Date();
+	// 	let query = `SELECT * FROM prompt
+	//     ORDER BY RAND()
+	//     LIMIT 1`;
+	// 	db.sendQuery(query, connection, (results) => {
+	// 		// console.log(results)
+	// 		let now = new Date();
 
-			let roundData = {
-				time: now.toISOString(),
-				round: round,
-				prompt_id: results[0].id,
-				prompt: results[0].prompt,
-				responses: []
-			};
+	// 		let roundData = {
+	// 			time: now.toISOString(),
+	// 			round: round,
+	// 			prompt_id: results[0].id,
+	// 			prompt: results[0].prompt,
+	// 			responses: []
+	// 		};
 
-			let responseMsg = 'Time ' + now.toLocaleString() + '; Round ' + roundData.round +
-				'; prompt_id=' + roundData.prompt_id + '; prompt: ' + roundData.prompt;
+	// 		let responseMsg = 'Time ' + now.toLocaleString() + '; Round ' + roundData.round +
+	// 			'; prompt_id=' + roundData.prompt_id + '; prompt: ' + roundData.prompt;
 
-			fs.readFile('data.json', 'utf8', function (err, currentData) {
-				if (err) throw err;
+	// 		fs.readFile('data.json', 'utf8', function (err, currentData) {
+	// 			if (err) throw err;
 
-				// read data.json as json object
-				jsonDataGlobal = JSON.parse(currentData);
+	// 			// read data.json as json object
+	// 			jsonDataGlobal = JSON.parse(currentData);
 
-				// push new round obj to rounds arr
-				jsonDataGlobal.rounds.push(roundData);
+	// 			// push new round obj to rounds arr
+	// 			jsonDataGlobal.rounds.push(roundData);
 
-				try {
-					// rewrite data.json with the updated global json obj
-					fs.writeFileSync('data.json', JSON.stringify(jsonDataGlobal, null, 2));
+	// 			try {
+	// 				// rewrite data.json with the updated global json obj
+	// 				fs.writeFileSync('data.json', JSON.stringify(jsonDataGlobal, null, 2));
 
-					// console.log('The User Response was appended to the file!');
-				} catch (err) {
-					console.log('we failed');
-					throw err;
-				}
-			});
+	// 				// console.log('The User Response was appended to the file!');
+	// 			} catch (err) {
+	// 				console.log('we failed');
+	// 				throw err;
+	// 			}
+	// 		});
 
-			// console.log(responseMsg)
-			io.emit('chat message', responseMsg);
-		});
-		round++;
+	// 		// console.log(responseMsg)
+	// 		io.emit('chat message', responseMsg);
+	// 	});
+	// 	round++;
 
-	});
+	// });
 });
 
 http.listen(port, function () {

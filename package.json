@@ -9,17 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/project-dali/playtest-prototype.git"
+    "url": "git+https://github.com/project-dali/thunk.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/project-dali/socket-test/issues"
+    "url": "https://github.com/project-dali/thunk/issues"
   },
-  "homepage": "https://github.com/project-dali/playtest-prototype#readme",
+  "homepage": "https://github.com/project-dali/thunk#readme",
   "dependencies": {
     "express": "^4.15.2",
     "mysql2": "^2.0.1",
+    "nunjucks": "^3.2.0",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {

@@ -3,11 +3,9 @@ const express = require('express');
 const app = express();
 app.set('view engine', 'nunjucks');
 
-const fs = require('fs');
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 const port = process.env.PORT || 3000;
-const htmlDir = '/html';
 
 const db = require('./db');
 const secret = require('./db-secret');
@@ -18,7 +16,9 @@ nunjucks.configure('views', {
 	autoescape: true,
 	express: app
 });
-nunjucks.configure('views', { autoescape: true });
+nunjucks.configure('views', {
+	autoescape: true
+});
 
 app.use('/static', express.static(__dirname + '/public'));
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Thunk</title>
+
+	<link rel="stylesheet" type="text/css" href="/static/main.css">
+	<script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+	{% block body %}{% endblock %}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+
+			socket = io();
+			let ctaButtons = document.querySelectorAll('section.cta button');
+
+			for (let button of ctaButtons) {
+				button.addEventListener('click', (e) => {
+					socket.emit(button.dataset.socketEmit);
+					// this reads the data-socket-emit attribute and sends
+					// its value as a socket event to the server
+				})
+			}
+
+			socket.on('test', (data) => {
+				console.log(data);
+			})
+		});
+	</script>
+
+	{% block postScript %}{% endblock %}
+</body>
+
+</html>

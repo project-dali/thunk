@@ -1,0 +1,84 @@
+{% extends "layouts/main.html" %}
+{# {% set title = "Thunk" %} #}
+
+{% block body %}
+<div role="banner" class="banner">
+	<!-- flowy background -->
+</div>
+<main>
+	<header class="title">
+		<!-- current page title or system prompt/feedback -->
+		<div class="brand-mark">
+			<!-- for use on landing and room join -->
+		</div>
+		<div class="no-outline">
+			<!-- in the case of the pink box, this would be class="outline" -->
+			<h1>Thunk</h1>
+			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
+			<!-- otherwise it may be "round 3 scores", "player 4 wins", "final scores" -->
+		</div>
+	</header>
+	<section class="primary">
+		<!-- description of main header, or forms/primary interactions -->
+		<h2>How to Play</h2>
+		<div class="instructions">
+			<p>Go to <b>thunk.fun</b> on your player device
+				Enter room code and join the game</p>
+		</div>
+		<div class="avi-picker" hidden>
+			<!-- avatar picker -->
+			<form action="">
+				<!-- grid of radio btns -->
+			</form>
+		</div>
+		<div class="round-switchup" data-round-type="think_twice" hidden>
+			<!-- for round switchups -->
+			<span class="conjunction">but</span>
+			<div class="outline">
+				<h2>The word “cluck” is randomly inserted into your answer</h2>
+			</div>
+		</div>
+		<div class="answer-selection" hidden>
+			<!-- displayed during voting -->
+		</div>
+	</section>
+	<section class="cta">
+		<!-- if the primary section is a description, calls to action go here -->
+		<div class="enter-game">
+			<button data-socket-emit="join game">Join Game</button>
+			<button data-socket-emit="create game">Create Game</button>
+		</div>
+		<div class="submit-room-code" hidden>
+			<button data-socket-emit="submit room code">Next</button>
+		</div>
+		<div class="submit-nickname" hidden>
+			<button data-socket-emit="submit nickname">Next</button>
+		</div>
+	</section>
+	<section role="status" class="system-status">
+		<!-- non-interactive system feedback -->
+		<div class="system-notes" hidden>
+			<!-- reminders and suggestions on the host screen -->
+		</div>
+		<div class="closed-captions" hidden>
+			<!-- narration captions -->
+		</div>
+		<div class="round-progress-bar" hidden>
+			<!-- progress bar during round -->
+		</div>
+		<div class="room-code-display" hidden>
+			<!-- room code that persists in btm right during a round -->
+		</div>
+	</section>
+</main>
+{% endblock %}
+
+{% block postScript %}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		socket.on('advance to: join form', (data) => {
+			console.log(data);
+		})
+	});
+</script>
+{% endblock %}

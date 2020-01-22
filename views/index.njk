@@ -88,15 +88,19 @@
 			<button data-socket-emit="submit nickname">Next</button>
 		</div>
 		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		
 		<div class="advance-to-form">
 			{# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
-			{% set views = ['goto landing', 'join game', 'host game', 'create game'] %}
-			<select id="views-list" name="viewsList">
-				{% for view in views %}
-				<option value='{{view}}'>{{view}}</option>
-				{% endfor %}
-			</select>
-			<button onclick="runATForm()">Go!</button>
+			<div id="at-debug-form">
+				{% set views = ['goto landing', 'join game', 'host game', 'create game'] %}
+				<select id="views-list" name="viewsList">
+					{% for view in views %}
+					<option value='{{view}}'>{{view}}</option>
+					{% endfor %}
+				</select>
+				<button id="at-submit-btn" onclick="runATForm()">Go!</button>
+			</div>
+			<button id="at-plus-btn" onclick="hideShowATForm()">+</button>
 		</div>
 	</section>
 	<section role="status" class="system-status component">
@@ -119,6 +123,16 @@
 
 {% block postScript %}
 <script>
+	// Shows + hides the AT form so it's out of the way.
+	function hideShowATForm(){
+		var atForm = document.getElementById('at-debug-form');
+		if(atForm.style.display == "inline") {
+			atForm.style.display = "none";
+		} else {
+			atForm.style.display = "inline";
+		}
+
+	}
 	// Runs the Advance-To form, used for debugging when the user needs to visit a page directly to test / see it. DELETE BEFORE FINAL (MARCH) COMMIT!
 	function runATForm(){
 		var sel = document.getElementById('views-list');

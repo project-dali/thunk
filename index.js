@@ -31,6 +31,8 @@ app.get('/', function (req, res) {
  * generates a random 8 digit numeric deviceID
  * @returns string
  */
+
+
 const createDeviceID = () => {
 	let deviceID = '';
 	for (let i = 0; i < 8; i++) {
@@ -73,6 +75,16 @@ io.on('connection', function (socket) {
 	socket.on('join game', function () {
 		// emit the room join page back to the socket
 		socket.emit('advance to: join form', deviceID);
+	});
+
+	socket.on('host game', function () {
+		// emit the host instructions page back to the socket
+		socket.emit('advance to: host instructions', '');
+	});
+
+	socket.on('create game', function () {
+		// emit the host instructions page back to the socket
+		socket.emit('advance to: waiting room', '' /* ADD ROOM CODE HERE */);
 	});
 
 	// socket.on('new round', function () {

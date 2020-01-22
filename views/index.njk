@@ -8,10 +8,10 @@
 <main>
 	<header class="title">
 		<!-- current page title or system prompt/feedback -->
-		<div class="brand-mark">
+		<div class="brand-mark component">
 			<!-- for use on landing and room join -->
 		</div>
-		<div class="no-outline">
+		<div class="game-title no-outline component">
 			<!-- in the case of the pink box, this would be class="outline" -->
 			<h1>Thunk</h1>
 			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
@@ -20,53 +20,86 @@
 	</header>
 	<section class="primary">
 		<!-- description of main header, or forms/primary interactions -->
-		<h2>How to Play</h2>
-		<div class="instructions">
+		<h2 class="how-to-play component">How to Play</h2>
+		<h2 class="host-scrn-title component">Player Instructions</h2>
+		<div class="landing-instructions component">
 			<p>Go to <b>thunk.fun</b> on your player device
 				Enter room code and join the game</p>
 		</div>
-		<div class="avi-picker" hidden>
+		<div class="hosting-instructions component" hidden>
+			<ol>
+				<li>Go to thunk.fun on your device browser</li>
+				<li>Wait for host to display room code</li>     
+				<li>Join the game using the room code</li>
+				<li>Wait for other players to join in</li>
+				<li>Thunk those good thunks and have fun!</li>
+			</ol>
+		</div>
+		<div class="room-code-form component" hidden>
+			<form action="">
+				<div class="input-wrap">
+					<label for="rm-code">
+					<h2>Room Code</h2>
+					</label>
+					<input type="text" name="rm-code" id="rm-code">
+				</div>
+			</form>
+		</div>
+		<div class="nickname-form component" hidden>
+			<form action="">
+				<div class="input-wrap">
+					<label for="rm-code">
+					<h2>Room Code</h2>
+					</label>
+					<input type="text" name="rm-code" id="rm-code">
+				</div>
+			</form>
+		</div>
+		<div class="avi-picker component" hidden>
 			<!-- avatar picker -->
 			<form action="">
 				<!-- grid of radio btns -->
 			</form>
 		</div>
-		<div class="round-switchup" data-round-type="think_twice" hidden>
+		<div class="round-switchup component" data-round-type="think_twice" hidden>
 			<!-- for round switchups -->
 			<span class="conjunction">but</span>
 			<div class="outline">
 				<h2>The word “cluck” is randomly inserted into your answer</h2>
 			</div>
 		</div>
-		<div class="answer-selection" hidden>
+		<div class="answer-selection component" hidden>
 			<!-- displayed during voting -->
 		</div>
 	</section>
 	<section class="cta">
 		<!-- if the primary section is a description, calls to action go here -->
-		<div class="enter-game">
+		<div class="enter-game component">
 			<button data-socket-emit="join game">Join Game</button>
-			<button data-socket-emit="create game">Create Game</button>
+			<button data-socket-emit="host game">Create Game</button>
 		</div>
-		<div class="submit-room-code" hidden>
+		<div class="play-game component" hidden>
+			<button data-socket-emit="create game">Play</button>
+		</div>
+		<div class="submit-room-code component" hidden>
 			<button data-socket-emit="submit room code">Next</button>
 		</div>
-		<div class="submit-nickname" hidden>
+		<div class="submit-nickname component" hidden>
 			<button data-socket-emit="submit nickname">Next</button>
 		</div>
 	</section>
-	<section role="status" class="system-status">
+	<section role="status" class="system-status component">
 		<!-- non-interactive system feedback -->
-		<div class="system-notes" hidden>
+		<div class="system-notes component" hidden>
 			<!-- reminders and suggestions on the host screen -->
 		</div>
-		<div class="closed-captions" hidden>
+		<div class="closed-captions component" hidden>
 			<!-- narration captions -->
 		</div>
-		<div class="round-progress-bar" hidden>
+		<div class="round-progress-bar component" hidden>
 			<!-- progress bar during round -->
 		</div>
-		<div class="room-code-display" hidden>
+		<div class="room-code-display component" hidden>
 			<!-- room code that persists in btm right during a round -->
 		</div>
 	</section>
@@ -75,9 +108,40 @@
 
 {% block postScript %}
 <script>
+	// An empty array which holds the class name of all components one wants to show on a given page on "advance to".
+	var compList = [];
+
+	// Hides all components in the document so that the document can go back and unhide the correct ones.
+	function hideAllComponents() {
+		var components = document.getElementsByClassName('component');
+		for(var i = 0; i < components.length; i++){
+			components[i].hidden = true;
+		}
+	}
+
+	// Shows all the correct components for the page as determined by CompList.
+	function showComponents() {
+		for(var i = 0; i < compList.length; i++){
+			document.getElementsByClassName(compList[i])[0].hidden = false;
+		}
+	}
+
+	// Runs the hide components to hide all, then shows the selected components from the compList array.
+	function genPage() {
+		hideAllComponents();
+		showComponents();
+	}
+
 	document.addEventListener('DOMContentLoaded', function () {
 		socket.on('advance to: join form', (data) => {
+			compList = ['game-title', 'room-code-form', 'submit-room-code'];
+			genPage();
 			console.log(data);
+		})
+
+		socket.on('advance to: host instructions', (data) => {
+			compList = ['game-title', 'host-scrn-title','hosting-instructions', 'play-game'];
+			genPage();
 		})
 	});
 </script>

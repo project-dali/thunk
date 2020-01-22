@@ -72,6 +72,11 @@ io.on('connection', function (socket) {
 		});
 	});
 
+	socket.on('goto landing', function () {
+		// emit the landing page back to the socket
+		socket.emit('advance to: landing pg', '');
+	});
+
 	socket.on('join game', function () {
 		// emit the room join page back to the socket
 		socket.emit('advance to: join form', deviceID);
@@ -83,7 +88,7 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('create game', function () {
-		// emit the host instructions page back to the socket
+		// emit the waiting room page back to the socket
 		socket.emit('advance to: waiting room', '' /* ADD ROOM CODE HERE */);
 	});
 

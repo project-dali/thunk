@@ -21,11 +21,11 @@
 	<section class="primary">
 		<!-- description of main header, or forms/primary interactions -->
 		<h2 class="how-to-play component">How to Play</h2>
-		<h2 class="host-scrn-title component">Player Instructions</h2>
 		<div class="landing-instructions component">
 			<p>Go to <b>thunk.fun</b> on your player device
 				Enter room code and join the game</p>
 		</div>
+		<h2 class="host-scrn-title component" hidden>Player Instructions</h2>
 		<div class="hosting-instructions component" hidden>
 			<ol>
 				<li>Go to thunk.fun on your device browser</li>
@@ -87,6 +87,17 @@
 		<div class="submit-nickname component" hidden>
 			<button data-socket-emit="submit nickname">Next</button>
 		</div>
+		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		<div class="advance-to-form">
+			{# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
+			{% set views = ['goto landing', 'join game', 'host game', 'create game'] %}
+			<select id="views-list" name="viewsList">
+				{% for view in views %}
+				<option value='{{view}}'>{{view}}</option>
+				{% endfor %}
+			</select>
+			<button onclick="runATForm()">Go!</button>
+		</div>
 	</section>
 	<section role="status" class="system-status component">
 		<!-- non-interactive system feedback -->
@@ -108,6 +119,13 @@
 
 {% block postScript %}
 <script>
+	// Runs the Advance-To form, used for debugging when the user needs to visit a page directly to test / see it. DELETE BEFORE FINAL (MARCH) COMMIT!
+	function runATForm(){
+		var sel = document.getElementById('views-list');
+		sel = sel.options[sel.selectedIndex].value;
+		socket.emit(sel);
+	};
+
 	// An empty array which holds the class name of all components one wants to show on a given page on "advance to".
 	var compList = [];
 
@@ -133,6 +151,10 @@
 	}
 
 	document.addEventListener('DOMContentLoaded', function () {
+		socket.on('advance to: landing pg', (date) => {
+			compList = ['game-title', 'how-to-play', 'landing-instructions', 'enter-game'];
+			genPage();
+		})
 		socket.on('advance to: join form', (data) => {
 			compList = ['game-title', 'room-code-form', 'submit-room-code'];
 			genPage();

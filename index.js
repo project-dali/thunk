@@ -94,9 +94,24 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('create room', function () {
-		// emit the waiting room page back to the socket
-		socket.emit('advance to: waiting room');
-		/*WHATEVER WE DO FOR ROOM CODE*/
+		socket.on('create room', function () {
+			let createRoom = (callback) => {
+				let __roomID;
+				let query = 'INSERT INTO thunk.room (is_playing)';
+				query += 'VALUES (0);';
+				db.sendQuery(query, connection, (err, results) => {
+					if (err) {
+						throw err;
+					}
+					__roomID = results.insertId;
+					callback(__roomID);
+				});
+			};
+			createRoom((roomID) => {
+				console.log(roomID);
+				socket.emit('advance to: waiting room', roomID);
+			});
+		});
 	});
 
 	// socket.on('new round', function () {

@@ -7,10 +7,10 @@
 <main>
 	<header class="title">
 		<!-- current page title or system prompt/feedback -->
-		<div class="brand-mark component">
+		<div class="brand-mark">
 			<!-- for use on landing and room join -->
 		</div>
-		<div class="game-title no-outline component">
+		<div class="game-title no-outline">
 			<!-- in the case of the pink box, this would be class="outline" -->
             <h1>Instructions</h1>
 			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
@@ -19,7 +19,7 @@
 	</header>
 	<section class="primary">
 		<!-- description of main header, or forms/primary interactions -->
-		<div class="hosting-instructions component">
+		<div class="hosting-instructions">
 			<ol>
 				<li>Go to <span class="red-text">thunk.fun</span> on your device browser</li>
 				<li>Wait for host to display room code</li>     
@@ -31,15 +31,15 @@
 	</section>
 	<section class="cta">
 		<!-- if the primary section is a description, calls to action go here -->
-		<div class="create-room component">
+		<div class="create-room">
 			<button data-socket-emit="create room">Create Room</button>
 		</div>
 		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
 		{% include "partials/debug-nav.njk" %}
 	</section>
-	<section role="status" class="system-status component">
+	<section role="status" class="system-status">
 		<!-- non-interactive system feedback -->
-		<div class="closed-captions component">
+		<div class="closed-captions">
 			<!-- narration captions -->
 		</div>
 	</section>
@@ -47,4 +47,5 @@
 {% endblock %}
 
 {% block postScript %}
+
 {% endblock %}

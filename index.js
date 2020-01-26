@@ -93,7 +93,7 @@ io.on('connection', function (socket) {
 		socket.emit('advance to: host instructions', '');
 	});
 
-	socket.on('create game', function () {
+	socket.on('create room', function () {
 		// emit the waiting room page back to the socket
 		socket.emit('advance to: waiting room');
 		/*WHATEVER WE DO FOR ROOM CODE*/

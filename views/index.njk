@@ -8,10 +8,10 @@
 <main>
 	<header class="title">
 		<!-- current page title or system prompt/feedback -->
-		<div class="brand-mark component">
+		<div class="brand-mark">
 			<!-- for use on landing and room join -->
 		</div>
-		<div class="game-title no-outline component">
+		<div class="game-title no-outline">
 			<!-- in the case of the pink box, this would be class="outline" -->
 			<h1>Thunk</h1>
 			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
@@ -20,32 +20,12 @@
 	</header>
 	<section class="primary">
 		<!-- description of main header, or forms/primary interactions -->
-		<h2 class="how-to-play component">How to Play</h2>
-		<div class="landing-instructions component">
+		<h2 class="how-to-play">How to Play</h2>
+		<div class="landing-instructions">
 			<p>Go to <b>thunk.fun</b> on your player device
 				Enter room code and join the game</p>
 		</div>
-		<h2 class="host-scrn-title component" hidden>Player Instructions</h2>
-		<div class="hosting-instructions component" hidden>
-			<ol>
-				<li>Go to thunk.fun on your device browser</li>
-				<li>Wait for host to display room code</li>     
-				<li>Join the game using the room code</li>
-				<li>Wait for other players to join in</li>
-				<li>Thunk those good thunks and have fun!</li>
-			</ol>
-		</div>
-		<div class="room-code-form component" hidden>
-			<form action="">
-				<div class="input-wrap">
-					<label for="rm-code">
-					<h2>Room Code</h2>
-					</label>
-					<input type="text" name="rm-code" id="rm-code">
-				</div>
-			</form>
-		</div>
-		<div class="nickname-form component" hidden>
+		<div class="nickname-form" hidden>
 			<form action="">
 				<div class="input-wrap">
 					<label for="nickname">
@@ -55,66 +35,50 @@
 				</div>
 			</form>
 		</div>
-		<div class="avi-picker component" hidden>
+		<div class="avi-picker" hidden>
 			<!-- avatar picker -->
 			<form action="">
 				<!-- grid of radio btns -->
 			</form>
 		</div>
-		<div class="round-switchup component" data-round-type="think_twice" hidden>
+		<div class="round-switchup" data-round-type="think_twice" hidden>
 			<!-- for round switchups -->
 			<span class="conjunction">but</span>
 			<div class="outline">
 				<h2>The word “cluck” is randomly inserted into your answer</h2>
 			</div>
 		</div>
-		<div class="answer-selection component" hidden>
+		<div class="answer-selection" hidden>
 			<!-- displayed during voting -->
 		</div>
 	</section>
 	<section class="cta">
 		<!-- if the primary section is a description, calls to action go here -->
-		<div class="enter-game component">
+		<div class="enter-game">
 			<button data-socket-emit="join game">Join Game</button>
 			<button data-socket-emit="host game">Create Game</button>
 		</div>
-		<div class="play-game component" hidden>
+		<div class="play-game" hidden>
 			<button data-socket-emit="create game">Play</button>
 		</div>
-		<div class="submit-room-code component" hidden>
-			<button data-socket-emit="submit room code">Next</button>
-		</div>
-		<div class="submit-nickname component" hidden>
+		<div class="submit-nickname" hidden>
 			<button data-socket-emit="submit nickname">Next</button>
 		</div>
 		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
-		
-		<div class="advance-to-form">
-			{# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
-			<div id="at-debug-form">
-				{% set views = ['goto landing', 'join game', 'host game', 'create game'] %}
-				<select id="views-list" name="viewsList">
-					{% for view in views %}
-					<option value='{{view}}'>{{view}}</option>
-					{% endfor %}
-				</select>
-				<button id="at-submit-btn" onclick="runATForm()">Go!</button>
-			</div>
-			<button id="at-plus-btn" onclick="hideShowATForm()">+</button>
-		</div>
+		{% include "partials/debug-nav.njk" %}
 	</section>
-	<section role="status" class="system-status component">
+	<section role="status" class="system-status">
 		<!-- non-interactive system feedback -->
-		<div class="system-notes component" hidden>
+		<div class="system-notes" hidden>
 			<!-- reminders and suggestions on the host screen -->
 		</div>
-		<div class="closed-captions component" hidden>
+		<div class="closed-captions" hidden>
 			<!-- narration captions -->
 		</div>
-		<div class="round-progress-bar component" hidden>
+		<div class="round-progress-bar" hidden>
 			<!-- progress bar during round -->
 		</div>
-		<div class="room-code-display component" hidden>
+		<div class="room-code-display" hidden>
 			<!-- room code that persists in btm right during a round -->
 		</div>
 	</section>
@@ -123,61 +87,18 @@
 
 {% block postScript %}
 <script>
-	// Shows + hides the AT form so it's out of the way.
-	function hideShowATForm(){
-		var atForm = document.getElementById('at-debug-form');
-		if(atForm.style.display == "inline") {
-			atForm.style.display = "none";
-		} else {
-			atForm.style.display = "inline";
-		}
-
-	}
-	// Runs the Advance-To form, used for debugging when the user needs to visit a page directly to test / see it. DELETE BEFORE FINAL (MARCH) COMMIT!
-	function runATForm(){
-		var sel = document.getElementById('views-list');
-		sel = sel.options[sel.selectedIndex].value;
-		socket.emit(sel);
-	};
-
-	// An empty array which holds the class name of all components one wants to show on a given page on "advance to".
-	var compList = [];
-
-	// Hides all components in the document so that the document can go back and unhide the correct ones.
-	function hideAllComponents() {
-		var components = document.getElementsByClassName('component');
-		for(var i = 0; i < components.length; i++){
-			components[i].hidden = true;
-		}
-	}
-
-	// Shows all the correct components for the page as determined by CompList.
-	function showComponents() {
-		for(var i = 0; i < compList.length; i++){
-			document.getElementsByClassName(compList[i])[0].hidden = false;
-		}
-	}
-
-	// Runs the hide components to hide all, then shows the selected components from the compList array.
-	function genPage() {
-		hideAllComponents();
-		showComponents();
-	}
-
 	document.addEventListener('DOMContentLoaded', function () {
-		socket.on('advance to: landing pg', (date) => {
-			compList = ['game-title', 'how-to-play', 'landing-instructions', 'enter-game'];
-			genPage();
-		})
-		socket.on('advance to: join form', (data) => {
-			compList = ['game-title', 'room-code-form', 'submit-room-code'];
-			genPage();
-			console.log(data);
+		socket.on('advance to: join form', () => {
+			window.location.href="join";
 		})
 
-		socket.on('advance to: host instructions', (data) => {
-			compList = ['game-title', 'host-scrn-title','hosting-instructions', 'play-game'];
-			genPage();
+		socket.on('advance to: host instructions', () => {
+			window.location.href="host-instructions";
+		})
+
+		socket.on('advance to: waiting room', (data) => {
+			window.location.href="";
+			/*WAITING ROOM*/
 		})
 	});
 </script>

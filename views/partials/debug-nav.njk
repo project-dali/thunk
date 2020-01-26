@@ -1,0 +1,32 @@
+{# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
+{% set views=['index', 'join', 'host-instructions'] %}
+<div class="debug-nav-container">
+	<div class="debug-nav">
+		<select id="views-list" name="viewsList">
+			{% for view in views %}
+			<option value='{{view}}'>{{view}}</option>
+			{% endfor %}
+		</select>
+		<button class="submit-button" onclick="runDebugNav()">Go!</button>
+	</div>
+	<button class="plus-button" onclick="toggleDebugNav()">+</button>
+
+	<script>
+	// Shows + hides the Debug form so it's out of the way.
+	function toggleDebugNav(){
+		var atForm = document.getElementsByClassName('debug-nav')[0];
+		if(atForm.style.display == "inline") {
+			atForm.style.display = "none";
+		} else {
+			atForm.style.display = "inline";
+		}
+	}
+
+	// Runs the Debug form, used for debugging when the user needs to visit a page directly to test / see it. DELETE BEFORE FINAL (MARCH) COMMIT!
+	function runDebugNav(){
+		let view = document.getElementById('views-list');
+		view = view.options[view.selectedIndex].value;
+		window.location.href=view;
+	};
+</script>
+</div>

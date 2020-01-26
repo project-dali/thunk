@@ -14,12 +14,25 @@
 		"no-global-assign": [
 			"warn",
 			{
-				"exceptions": ["Object"]
+				"exceptions": [
+					"Object"
+				]
 			}
 		],
-		"no-unused-vars": ["warn"],
-		"indent": ["warn", "tab"],
-		"quotes": ["warn", "single"],
-		"semi": ["error", "always"]
+		"no-unused-vars": [
+			"warn"
+		],
+		"indent": [
+			"warn",
+			"tab"
+		],
+		"quotes": [
+			"warn",
+			"single"
+		],
+		"semi": [
+			"error",
+			"always"
+		]
 	}
 }

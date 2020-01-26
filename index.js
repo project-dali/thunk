@@ -23,8 +23,19 @@ nunjucks.configure('views', {
 app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-	// res.sendFile(__dirname + htmlDir + '/landing.html');
 	res.render('index.njk');
+});
+
+app.get('/index', function (req, res) {
+	res.render('index.njk');
+});
+
+app.get('/join', function (req, res) {
+	res.render('join.njk');
+});
+
+app.get('/host-instructions', function (req, res) {
+	res.render('host-instructions.njk');
 });
 
 /**
@@ -72,14 +83,9 @@ io.on('connection', function (socket) {
 		});
 	});
 
-	socket.on('goto landing', function () {
-		// emit the landing page back to the socket
-		socket.emit('advance to: landing pg', '');
-	});
-
 	socket.on('join game', function () {
 		// emit the room join page back to the socket
-		socket.emit('advance to: join form', deviceID);
+		socket.emit('advance to: join form');
 	});
 
 	socket.on('host game', function () {
@@ -89,7 +95,8 @@ io.on('connection', function (socket) {
 
 	socket.on('create game', function () {
 		// emit the waiting room page back to the socket
-		socket.emit('advance to: waiting room', '' /* ADD ROOM CODE HERE */);
+		socket.emit('advance to: waiting room');
+		/*WHATEVER WE DO FOR ROOM CODE*/
 	});
 
 	// socket.on('new round', function () {

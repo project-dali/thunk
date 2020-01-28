@@ -1,6 +1,5 @@
 /*eslint-env node */
 let mysql = require('mysql2');
-// let secret = require('./db-secret');
 
 function createCon(credentials) {
 	let connection = mysql.createConnection({
@@ -11,13 +10,18 @@ function createCon(credentials) {
 	});
 	return connection;
 }
-
+/**
+ * 
+ * @param {String} query Sql query
+ * @param {Object} connection database connection
+ * @param {Function} callback function to run when done stuff
+ */
 function sendQuery(query, connection, callback) {
-	connection.query(query, function (err, results) { // add fields param if desired
+	connection.query(query, function (err, results, fields) { // add fields param if desired
 		// if (err) throw err;
 		// console.log(results); // results contains rows returned by server
 		// console.log(fields); // fields contains extra meta data about results, if available    
-		callback(err, results);
+		callback(err, results, fields);
 	});
 }
 

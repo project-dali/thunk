@@ -12,13 +12,20 @@
 	<button class="plus-button" onclick="toggleDebugNav()">+</button>
 
 	<script>
-	// Shows + hides the Debug form so it's out of the way.
+	/**
+	* Shows or hides the Navigation form for use during debugging
+	* @returns bool is the Debug Nav now being shown?
+	*/
 	function toggleDebugNav(){
 		var atForm = document.getElementsByClassName('debug-nav')[0];
 		if(atForm.style.display == "inline") {
+			// if is shown, hide it
 			atForm.style.display = "none";
+			return false;
 		} else {
+			// if is hidden, show it
 			atForm.style.display = "inline";
+			return true;
 		}
 	}
 

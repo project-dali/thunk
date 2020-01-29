@@ -32,21 +32,11 @@ app.get('/', function (req, res) {
 	res.render('index.njk');
 });
 
-app.get('/index', function (req, res) {
-	res.render('index.njk');
+app.get('/:view', function (req, res) {
+	let view = req.params.view;
+	res.render(view + '.njk');
 });
 
-app.get('/join', function (req, res) {
-	res.render('join.njk');
-});
-
-app.get('/nickname', function (req, res) {
-	res.render('nickname.njk');
-});
-
-app.get('/host-instructions', function (req, res) {
-	res.render('host-instructions.njk');
-});
 // --------------------------------------------------------
 // Global Functions
 // --------------------------------------------------------

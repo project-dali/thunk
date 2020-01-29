@@ -1,5 +1,5 @@
 {# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
-{% set views=['index', 'join', 'host-instructions'] %}
+{% set views=['index', 'join', 'nickname', 'host-instructions'] %}
 <div class="debug-nav-container">
 	<div class="debug-nav">
 		<select id="views-list" name="viewsList">
@@ -17,14 +17,14 @@
 	* @returns bool is the Debug Nav now being shown?
 	*/
 	function toggleDebugNav(){
-		var atForm = document.getElementsByClassName('debug-nav')[0];
-		if(atForm.style.display == "inline") {
+		var debugForm = document.getElementsByClassName('debug-nav')[0];
+		if(debugForm.style.display == "inline") {
 			// if is shown, hide it
-			atForm.style.display = "none";
+			debugForm.style.display = "none";
 			return false;
 		} else {
 			// if is hidden, show it
-			atForm.style.display = "inline";
+			debugForm.style.display = "inline";
 			return true;
 		}
 	}

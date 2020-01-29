@@ -12,27 +12,27 @@
 		</div>
 		<div class="game-title no-outline">
 			<!-- in the case of the pink box, this would be class="outline" -->
-			<h1>Welcome</h1>
-			<span class="subtitle">Please enter a room code</span>
+			<h1>Nickname</h1>
+			<span class="subtitle">What name would you like to use?</span>
 			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
 			<!-- otherwise it may be "round 3 scores", "player 4 wins", "final scores" -->
 		</div>
 	</header>
 	<section class="primary">
 		<!-- description of main header, or forms/primary interactions -->
-		<div class="room-code-form">
-			<form action="" name="room-code-form" id="room-code-form">
+		<div class="nickname-form">
+			<form action="" name="nickname-form" id="nickname-form">
 				<div class="input-wrap">
-					<label for="room-code" hidden>Room Code</label>
-					<input type="number" name="room-code" id="room-code">
+					<label for="room-code" hidden>Nickname</label>
+					<input type="number" name="nickname" id="nickname">
 				</div>
 			</form>
 		</div>
 	</section>
 	<section class="cta">
 		<!-- if the primary section is a description, calls to action go here -->
-		<div class="submit-room-code">
-			<button data-socket-emit="submit room code">Join Room</button>
+		<div class="submit-nickname">
+			<button data-socket-emit="submit nickname">Join Room</button>
 		</div>
 		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
 		{% include "partials/debug-nav.njk" %}

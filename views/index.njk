@@ -88,15 +88,15 @@
 {% block postScript %}
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
-		socket.on('advance to: join form', () => {
+		thunkidm.socket.on('advance to: join form', () => {
 			window.location.href="join";
 		})
 
-		socket.on('advance to: host instructions', () => {
+		thunkidm.socket.on('advance to: host instructions', () => {
 			window.location.href="host-instructions";
 		})
 
-		socket.on('advance to: waiting room', (data) => {
+		thunkidm.socket.on('advance to: waiting room', (data) => {
 			window.location.href="";
 			/*WAITING ROOM*/
 		})

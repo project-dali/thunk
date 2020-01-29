@@ -40,6 +40,10 @@ app.get('/join', function (req, res) {
 	res.render('join.njk');
 });
 
+app.get('/nickname', function (req, res) {
+	res.render('nickname.njk');
+});
+
 app.get('/host-instructions', function (req, res) {
 	res.render('host-instructions.njk');
 });
@@ -70,7 +74,7 @@ io.on('connection', function (socket) {
 				if (err.errno === 1062) {
 					__deviceID = createDeviceID();
 					createDeviceEntry(__deviceID);
-				}
+				} // if another SQL error, stop everything
 				throw err;
 			}
 			return __deviceID;
@@ -79,21 +83,80 @@ io.on('connection', function (socket) {
 	};
 
 	let deviceID = createDeviceEntry(createDeviceID());
-	socket.emit('test', deviceID);
+	let roomID = '';
 
 	socket.on('disconnect', function () {
 		let query = 'DELETE FROM thunk.device ';
 		query += `WHERE id=${deviceID};`;
-		db.sendQuery(query, connection, (err, results) => {
+		db.sendQuery(query, connection, (err, results, fields) => {
 			if (err) {
 				throw err;
 			}
 		});
 	});
 
-	socket.on('join game', function () {
+	socket.on('join game', function (formData) {
 		// emit the room join page back to the socket
 		socket.emit('advance to: join form');
+	});
+
+	socket.on('submit room code', function (formData) {
+		/**
+		 * Searches database to see if this room code exists
+		 * @param {string} __roomID 6 digit room code
+		 * @returns {boolean} does this roomID exist?
+		 */
+		let roomIDExists = (__roomID) => {
+			return new Promise((resolve) => {
+				let query = `SELECT * FROM thunk.room WHERE id='${__roomID}';`;
+
+				db.sendQuery(query, connection, (err, results, fields) => {
+					if (err) { // if duplicate entry, make a new code and try again
+						throw err;
+					}
+					if (results.length > 0) { // a room with this ID exists
+						resolve(true);
+					} else {
+						resolve(false);
+					}
+				});
+			});
+		};
+
+		/**
+		 * Sets the thunk.device room_id field to __roomID for
+		 * the provided deviceID
+		 * @param {string} __roomID 6 digit room code
+		 * @param {string} __deviceID 10 digit device code
+		 */
+		let updateDeviceRoom = (__roomID, __deviceID) => {
+			let query = `UPDATE thunk.device 
+			SET room_id = (${__roomID}) 
+			WHERE id='${__deviceID}';`;
+			db.sendQuery(query, connection, (err, results, fields) => {
+				if (err) {
+					throw err;
+				}
+				console.log(results);
+				// return true;
+			});
+		};
+
+		// roomID inherited from on.connection scope
+		roomID = formData['room-code'];
+		roomID = db.mysql_real_escape_string(roomID);
+
+		roomIDExists(roomID).then((value) => {
+			if (value) {
+				updateDeviceRoom(roomID, deviceID);
+				socket.join(roomID);
+				socket.emit('advance to: nickname picker');
+			} else {
+				// send back to the client that this room doesn't exist
+				// we should do this in a better way probably idk
+				socket.emit('invalid input', 'This room code does not exist.');
+			}
+		});
 	});
 
 	socket.on('host game', function () {
@@ -114,21 +177,22 @@ io.on('connection', function (socket) {
 			return roomID;
 		};
 
-		let createRoom = (callback) => {
-			let __roomID;
-			let query = 'INSERT INTO thunk.room (is_playing)';
-			query += 'VALUES (0);';
+		let createRoom = (__roomID, callback) => {
+			let query = 'INSERT INTO thunk.room (id)';
+			query += `VALUES (${__roomID});`;
 			db.sendQuery(query, connection, (err, results, fields) => {
-				if (err) {
+				if (err) { // if duplicate entry, make a new code and try again
+					if (err.errno === 1062) {
+						__roomID = createRoomID();
+						createRoom(__roomID);
+					} // if another SQL error, stop everything
 					throw err;
 				}
-				__roomID = results.insertId;
 				callback(__roomID);
 			});
 		};
-
-		createRoom((roomID) => {
-			console.log(roomID);
+		let roomID = createRoomID();
+		createRoom(roomID, (roomID) => {
 			socket.emit('advance to: waiting room', roomID);
 		});
 	});

@@ -47,5 +47,11 @@
 {% endblock %}
 
 {% block postScript %}
-
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		thunkidm.socket.on('advance to: waiting room', () => {
+			window.location.href = 'waiting-room';
+		})
+	});
+</script>
 {% endblock %}

@@ -32,6 +32,7 @@ app.get('/', function (req, res) {
 	res.render('index.njk');
 });
 
+// Grabs the name of the view from the request, stores it in a variable, and then renders the correct Nunjucks file from that variable.
 app.get('/:view', function (req, res) {
 	let view = req.params.view;
 	res.render(view + '.njk');
@@ -85,7 +86,7 @@ io.on('connection', function (socket) {
 		});
 	});
 
-	socket.on('join game', function (formData) {
+	socket.on('join game', function () {
 		// emit the room join page back to the socket
 		socket.emit('advance to: join form');
 	});
@@ -151,7 +152,7 @@ io.on('connection', function (socket) {
 
 	socket.on('host game', function () {
 		// emit the host instructions page back to the socket
-		socket.emit('advance to: host instructions', '');
+		socket.emit('advance to: host instructions');
 	});
 
 	socket.on('create room', function () {
@@ -185,6 +186,10 @@ io.on('connection', function (socket) {
 		createRoom(roomID, (roomID) => {
 			socket.emit('advance to: waiting room', roomID);
 		});
+	});
+
+	socket.on('start game', function () {
+		socket.emit('advance to: standby');
 	});
 });
 // --------------------------------------------------------

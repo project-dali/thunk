@@ -14,6 +14,8 @@ const db = require('./db');
 const secret = require('./db-secret');
 let connection = db.createCon(secret.dbCredentials);
 
+let deviceID = '';
+
 const nunjucks = require('nunjucks');
 nunjucks.configure('views', {
 	autoescape: true,
@@ -57,6 +59,7 @@ const createDeviceID = () => {
 // --------------------------------------------------------
 io.on('connection', function (socket) {
 	console.log('new connection');
+
 	const createDeviceEntry = (__deviceID) => {
 		let query = 'INSERT INTO thunk.device (id)';
 		query += `VALUES (${__deviceID});`;
@@ -68,13 +71,21 @@ io.on('connection', function (socket) {
 				} // if another SQL error, stop everything
 				throw err;
 			}
+			socket.emit('store device id', __deviceID);
 			return __deviceID;
 		});
 		return __deviceID;
 	};
 
-	let deviceID = createDeviceEntry(createDeviceID());
 	let roomID = '';
+
+	socket.on('send device id',function(__deviceID){
+		if(__deviceID === null) {
+			deviceID = createDeviceEntry(createDeviceID());
+		} else {
+			deviceID = createDeviceEntry(__deviceID);
+		}
+	});
 
 	socket.on('disconnect', function () {
 		let query = 'DELETE FROM thunk.device ';

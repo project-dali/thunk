@@ -16,7 +16,6 @@
 	<form hidden></form>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
-
 			// this is our global variable
 			thunkidm = {
 				global: true, // this doesn't serve any purpose
@@ -43,6 +42,12 @@
 				e.preventDefault();
 				// TODO: Add form submission for correct socket event
 				return false;
+			});
+
+			thunkidm.socket.emit('send device id', localStorage.getItem('deviceID'));
+
+			thunkidm.socket.on('store device id', function (__deviceID) {
+				localStorage.setItem('deviceID', __deviceID);
 			});
 		});
 	</script>

@@ -48,11 +48,11 @@ app.get('/:view', function (req, res) {
  * @returns string
  */
 const createDeviceID = () => {
-	let deviceID = '';
+	let __deviceID = '';
 	for (let i = 0; i < 8; i++) {
-		deviceID += String(Math.floor(Math.random() * 10));
+		__deviceID += String(Math.floor(Math.random() * 10));
 	}
-	return deviceID;
+	return __deviceID;
 };
 // --------------------------------------------------------
 // Received Socket Events
@@ -68,8 +68,9 @@ io.on('connection', function (socket) {
 				if (err.errno === 1062) {
 					__deviceID = createDeviceID();
 					createDeviceEntry(__deviceID);
-				} // if another SQL error, stop everything
-				throw err;
+				} else {
+					throw err; // else, throw an error
+				}
 			}
 			socket.emit('store device id', __deviceID);
 			return __deviceID;
@@ -88,13 +89,15 @@ io.on('connection', function (socket) {
 	});
 
 	socket.on('disconnect', function () {
-		let query = 'DELETE FROM thunk.device ';
-		query += `WHERE id=${deviceID};`;
-		db.sendQuery(query, connection, (err, results, fields) => {
-			if (err) {
-				throw err;
-			}
-		});
+		if(deviceID !== '') {
+			let query = 'DELETE FROM thunk.device ';
+			query += `WHERE id=${deviceID};`;
+			db.sendQuery(query, connection, (err, results, fields) => {
+				if (err) {
+					throw err;
+				}
+			});
+		}
 	});
 
 	socket.on('join game', function () {

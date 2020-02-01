@@ -1,0 +1,26 @@
+{% extends "layouts/main.html" %}
+
+{% block body %}
+<div role="banner" class="banner">
+	<!-- flowy background -->
+</div>
+<main>
+	<header class="title">
+		<!-- current page title or system prompt/feedback -->
+	</header>
+	<section class="primary">
+		<!-- description of main header, or forms/primary interactions -->
+	</section>
+	<section class="cta">
+		<!-- if the primary section is a description, calls to action go here -->
+		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		{% include "partials/debug-nav.njk" %}
+	</section>
+	<section role="status" class="system-status">
+		<!-- non-interactive system feedback -->
+	</section>
+</main>
+{% endblock %}
+
+{% block postScript %}
+{% endblock %}

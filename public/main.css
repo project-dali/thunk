@@ -23,6 +23,29 @@
     --thunk-pink: #ED1968;
 }
 
+.debug-nav-container {
+    position:absolute;
+    top:100vh; left: 0;
+    transform:translateY(-100%);
+    z-index: 10;
+}
+
+.debug-nav {
+    display: none;
+}
+
+.debug-nav .submit-button {
+    font-size: 1.5rem;
+    margin: 0 1rem;
+    padding: 1rem 1.5rem;
+}
+
+.debug-nav-container .plus-button {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 1rem 1.5rem;
+}
+
 html {
     font-size: 100%;
     /* Set font size to user preference */
@@ -61,21 +84,6 @@ h3 {
     font-weight: 400;
 }
 
-/* ! Remove these styles once alpha is built */
-#tempNav {
-    background-color: #000;
-    padding: .5rem;
-    color: #fff;
-}
-
-#tempNav a {
-    color: #fff;
-    margin-right: .25rem;
-    display: inline-block;
-}
-
-/* ! --------------------------------------- */
-
 #splash {
     height: 100%;
     width: 100%;
@@ -98,40 +106,6 @@ main {
     align-items: center;
     padding-top: var(--main-padding);
     position: relative;
-}
-
-.box-gray {
-    background-color: var(--gray-bg-color, LightGrey);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    text-align: center;
-}
-
-.box-gray * {
-    margin: 0;
-    text-align: center;
-}
-
-#instructions {
-    max-width: 49.375rem;
-}
-
-#instructions>p {
-    font-size: 2.75rem;
-    line-height: 2;
-}
-
-#code,
-#prompt {
-    /* min-width: 40rem; */
-    max-width: 60rem;
-}
-
-#code>p {
-    font-size: 4.5rem;
-    font-weight: bold;
 }
 
 button {
@@ -158,6 +132,74 @@ button:focus {
 
 button:focus {
     outline: 5px solid var(--thunk-pink, pink);
+}
+
+/* Applies a gray background to the element */
+.box-gray {
+    background-color: var(--gray-bg-color, LightGrey);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
+
+.box-gray * {
+    margin: 0;
+    text-align: center;
+}
+
+.switch-up p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
+    margin: 2rem 0;
+}
+
+.room-code-display {
+    position:absolute;
+    top:100vh; right: 0;
+    transform:translateY(-100%);
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+}
+
+.round-progress-bar {
+    width: 80vw;
+    max-width: 60rem;
+    height: 3rem;
+    padding: 0;
+    margin-top: 3em;
+}
+
+.timer-bar {
+    height: 100%;
+    width: 100%;
+    background-color: var(--thunk-pink, pink);
+}
+
+/* ! Code from alpha static ------------------------------------ */
+
+#instructions {
+    max-width: 49.375rem;
+}
+
+#instructions>p {
+    font-size: 2.75rem;
+    line-height: 2;
+}
+
+#code,
+#prompt {
+    /* min-width: 40rem; */
+    max-width: 60rem;
+}
+
+#code>p {
+    font-size: 4.5rem;
+    font-weight: bold;
 }
 
 #connected-players {
@@ -245,16 +287,6 @@ button:focus {
     font-size: 2rem;
 }
 
-#code-fixed {
-    position: absolute;
-    right: .5rem;
-    bottom: .5rem;
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-}
-
 #prompt-instructions>h3,
 #switch-up>h3 {
     font-size: 3rem;
@@ -267,21 +299,6 @@ button:focus {
 #switch-up>p,
 #prompt>p {
     font-size: 1.5rem;
-}
-
-#timer {
-    width: 80%;
-    max-width: 60rem;
-    height: 3rem;
-    position: absolute;
-    bottom: .5rem;
-    padding: 0;
-}
-
-#timer-bar {
-    height: 100%;
-    width: 100%;
-    background-color: var(--thunk-pink, pink);
 }
 
 #resp-grid {

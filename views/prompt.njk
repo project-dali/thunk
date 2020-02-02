@@ -1,0 +1,51 @@
+{% extends "layouts/main.html" %}
+
+{% block body %}
+<div role="banner" class="banner">
+	<!-- flowy background -->
+</div>
+<main>
+	<header class="title">
+		<!-- current page title or system prompt/feedback -->
+		<div class="brand-mark">
+			<!-- for use on landing and room join -->
+		</div>
+		<div class="prompt outline box-gray">
+			<!-- in the case of the pink box, this would be class="outline" -->
+            <h1 class="prompt-text">Pumkins are classified as a fruit.</h1>
+			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
+			<!-- otherwise it may be "round 3 scores", "player 4 wins", "final scores" -->
+		</div>
+	</header>
+	<section class="primary">
+		<!-- description of main header, or forms/primary interactions -->
+		<div class="switch-up">
+			<p>BUT</p>
+			<h2 class="switch-up-text box-gray">Every answer must include the word &quot;cow&quot;</h2>
+		</div>
+	</section>
+	<section class="cta">
+		<!-- if the primary section is a description, calls to action go here -->
+		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		{% include "partials/debug-nav.njk" %}
+	</section>
+	<section role="status" class="system-status">
+		<!-- non-interactive system feedback -->
+		<div class="closed-captions">
+			<!-- narration captions -->
+		</div>
+		{% include "partials/room-code-display.njk" %}
+		{% include "partials/round-progress-bar.njk" %}
+	</section>
+</main>
+{% endblock %}
+
+{% block postScript %}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		thunkidm.socket.on('advance to: waiting room', () => {
+			window.location.href = 'waiting-room';
+		})
+	});
+</script>
+{% endblock %}

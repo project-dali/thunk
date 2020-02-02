@@ -11,7 +11,7 @@
 		<div class="brand-mark">
 			<!-- for use on landing and room join -->
 		</div>
-		<div class="no-outline">
+		<div class="game-title no-outline">
 			<!-- in the case of the pink box, this would be class="outline" -->
 			<h1>Thunk</h1>
 			<!-- during a round the h1 would be a prompt, so content might be "TFOML" -->
@@ -20,10 +20,20 @@
 	</header>
 	<section class="primary">
 		<!-- description of main header, or forms/primary interactions -->
-		<h2>How to Play</h2>
-		<div class="instructions">
+		<h2 class="how-to-play">How to Play</h2>
+		<div class="landing-instructions">
 			<p>Go to <b>thunk.fun</b> on your player device
 				Enter room code and join the game</p>
+		</div>
+		<div class="nickname-form" hidden>
+			<form action="">
+				<div class="input-wrap">
+					<label for="nickname">
+					<h2>Nickname</h2>
+					</label>
+					<input type="text" name="nickname" id="nickname">
+				</div>
+			</form>
 		</div>
 		<div class="avi-picker" hidden>
 			<!-- avatar picker -->
@@ -46,14 +56,16 @@
 		<!-- if the primary section is a description, calls to action go here -->
 		<div class="enter-game">
 			<button data-socket-emit="join game">Join Game</button>
-			<button data-socket-emit="create game">Create Game</button>
+			<button data-socket-emit="host game">Create Game</button>
 		</div>
-		<div class="submit-room-code" hidden>
-			<button data-socket-emit="submit room code">Next</button>
+		<div class="play-game" hidden>
+			<button data-socket-emit="create game">Play</button>
 		</div>
 		<div class="submit-nickname" hidden>
 			<button data-socket-emit="submit nickname">Next</button>
 		</div>
+		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		{% include "partials/debug-nav.njk" %}
 	</section>
 	<section role="status" class="system-status">
 		<!-- non-interactive system feedback -->
@@ -76,8 +88,12 @@
 {% block postScript %}
 <script>
 	document.addEventListener('DOMContentLoaded', function () {
-		socket.on('advance to: join form', (data) => {
-			console.log(data);
+		thunkidm.socket.on('advance to: join form', () => {
+			window.location.href="join";
+		})
+
+		thunkidm.socket.on('advance to: host instructions', () => {
+			window.location.href="host-instructions";
 		})
 	});
 </script>

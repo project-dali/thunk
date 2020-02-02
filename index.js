@@ -1,4 +1,7 @@
 /*eslint-env node */
+// --------------------------------------------------------
+// Import/Config
+// --------------------------------------------------------
 const express = require('express');
 const app = express();
 app.set('view engine', 'nunjucks');
@@ -11,6 +14,8 @@ const db = require('./db');
 const secret = require('./db-secret');
 let connection = db.createCon(secret.dbCredentials);
 
+let deviceID = '';
+
 const nunjucks = require('nunjucks');
 nunjucks.configure('views', {
 	autoescape: true,
@@ -20,111 +25,190 @@ nunjucks.configure('views', {
 	autoescape: true
 });
 
+// --------------------------------------------------------
+// Express Routes
+// --------------------------------------------------------
 app.use('/static', express.static(__dirname + '/public'));
 
 app.get('/', function (req, res) {
-	// res.sendFile(__dirname + htmlDir + '/landing.html');
 	res.render('index.njk');
 });
 
+// Grabs the name of the view from the request, stores it in a variable, and then renders the correct Nunjucks file from that variable.
+app.get('/:view', function (req, res) {
+	let view = req.params.view;
+	if(view !== 'favicon.ico') res.render(view + '.njk');
+});
+
+// --------------------------------------------------------
+// Global Functions
+// --------------------------------------------------------
 /**
  * generates a random 8 digit numeric deviceID
  * @returns string
  */
 const createDeviceID = () => {
-	let deviceID = '';
+	let __deviceID = '';
 	for (let i = 0; i < 8; i++) {
-		deviceID += String(Math.floor(Math.random() * 10));
+		__deviceID += String(Math.floor(Math.random() * 10));
 	}
-	return deviceID;
+	return __deviceID;
 };
-
+// --------------------------------------------------------
+// Received Socket Events
+// --------------------------------------------------------
 io.on('connection', function (socket) {
 	console.log('new connection');
+
 	const createDeviceEntry = (__deviceID) => {
 		let query = 'INSERT INTO thunk.device (id)';
 		query += `VALUES (${__deviceID});`;
-		db.sendQuery(query, connection, (err, results) => {
+		db.sendQuery(query, connection, (err, results, fields) => {
 			if (err) { // if duplicate entry, make a new code and try again
 				if (err.errno === 1062) {
 					__deviceID = createDeviceID();
 					createDeviceEntry(__deviceID);
+				} else {
+					throw err; // else, throw an error
 				}
-				throw err;
 			}
+			socket.emit('store device id', __deviceID);
 			return __deviceID;
 		});
 		return __deviceID;
 	};
 
-	let deviceID = createDeviceEntry(createDeviceID());
-	socket.emit('test', deviceID);
+	let roomID = '';
+
+	socket.on('send device id',function(__deviceID){
+		if(__deviceID === null) {
+			deviceID = createDeviceEntry(createDeviceID());
+		} else {
+			deviceID = createDeviceEntry(__deviceID);
+		}
+	});
 
 	socket.on('disconnect', function () {
-		let query = 'DELETE FROM thunk.device ';
-		query += `WHERE id=${deviceID};`;
-		db.sendQuery(query, connection, (err, results) => {
-			if (err) {
-				throw err;
-			}
-		});
+		if(deviceID !== '') {
+			let query = 'DELETE FROM thunk.device ';
+			query += `WHERE id=${deviceID};`;
+			db.sendQuery(query, connection, (err, results, fields) => {
+				if (err) {
+					throw err;
+				}
+			});
+		}
 	});
 
 	socket.on('join game', function () {
 		// emit the room join page back to the socket
-		socket.emit('advance to: join form', deviceID);
+		socket.emit('advance to: join form');
 	});
 
-	// socket.on('new round', function () {
+	socket.on('submit room code', function (formData) {
+		/**
+		 * Searches database to see if this room code exists
+		 * @param {string} __roomID 6 digit room code
+		 * @returns {boolean} does this roomID exist?
+		 */
+		let roomIDExists = (__roomID) => {
+			return new Promise((resolve) => {
+				let query = `SELECT * FROM thunk.room WHERE id='${__roomID}';`;
 
-	// 	rndResponses = 0;
+				db.sendQuery(query, connection, (err, results, fields) => {
+					if (err) { // if duplicate entry, make a new code and try again
+						throw err;
+					}
+					if (results.length > 0) { // a room with this ID exists
+						resolve(true);
+					} else {
+						resolve(false);
+					}
+				});
+			});
+		};
 
-	// 	let query = `SELECT * FROM prompt
-	//     ORDER BY RAND()
-	//     LIMIT 1`;
-	// 	db.sendQuery(query, connection, (results) => {
-	// 		// console.log(results)
-	// 		let now = new Date();
+		/**
+		 * Sets the thunk.device room_id field to __roomID for
+		 * the provided deviceID
+		 * @param {string} __roomID 6 digit room code
+		 * @param {string} __deviceID 10 digit device code
+		 */
+		let updateDeviceRoom = (__roomID, __deviceID) => {
+			let query = `UPDATE thunk.device 
+			SET room_id = (${__roomID}) 
+			WHERE id='${__deviceID}';`;
+			db.sendQuery(query, connection, (err, results, fields) => {
+				if (err) {
+					throw err;
+				}
+				console.log(results);
+				// return true;
+			});
+		};
 
-	// 		let roundData = {
-	// 			time: now.toISOString(),
-	// 			round: round,
-	// 			prompt_id: results[0].id,
-	// 			prompt: results[0].prompt,
-	// 			responses: []
-	// 		};
+		// roomID inherited from on.connection scope
+		roomID = formData['room-code'];
+		roomID = db.mysql_real_escape_string(roomID);
 
-	// 		let responseMsg = 'Time ' + now.toLocaleString() + '; Round ' + roundData.round +
-	// 			'; prompt_id=' + roundData.prompt_id + '; prompt: ' + roundData.prompt;
+		roomIDExists(roomID).then((value) => {
+			if (value) {
+				updateDeviceRoom(roomID, deviceID);
+				socket.join(roomID);
+				socket.emit('advance to: nickname picker');
+			} else {
+				// send back to the client that this room doesn't exist
+				// we should do this in a better way probably idk
+				socket.emit('invalid input', 'This room code does not exist.');
+			}
+		});
+	});
 
-	// 		fs.readFile('data.json', 'utf8', function (err, currentData) {
-	// 			if (err) throw err;
+	socket.on('host game', function () {
+		// emit the host instructions page back to the socket
+		socket.emit('advance to: host instructions');
+	});
 
-	// 			// read data.json as json object
-	// 			jsonDataGlobal = JSON.parse(currentData);
+	socket.on('create room', function () {
+		/**
+		 * generates random 6 digit room code
+		 * @returns string roomID
+		 */
+		let createRoomID = () => {
+			let roomID = '';
+			for (let i = 0; i < 6; i++) {
+				roomID += String(Math.floor(Math.random() * 10));
+			}
+			return roomID;
+		};
 
-	// 			// push new round obj to rounds arr
-	// 			jsonDataGlobal.rounds.push(roundData);
+		let createRoom = (__roomID, callback) => {
+			let query = 'INSERT INTO thunk.room (id)';
+			query += `VALUES (${__roomID});`;
+			db.sendQuery(query, connection, (err, results, fields) => {
+				if (err) { // if duplicate entry, make a new code and try again
+					if (err.errno === 1062) {
+						__roomID = createRoomID();
+						createRoom(__roomID);
+					} // if another SQL error, stop everything
+					throw err;
+				}
+				callback(__roomID);
+			});
+		};
+		let roomID = createRoomID();
+		createRoom(roomID, (roomID) => {
+			socket.emit('advance to: waiting room', roomID);
+		});
+	});
 
-	// 			try {
-	// 				// rewrite data.json with the updated global json obj
-	// 				fs.writeFileSync('data.json', JSON.stringify(jsonDataGlobal, null, 2));
-
-	// 				// console.log('The User Response was appended to the file!');
-	// 			} catch (err) {
-	// 				console.log('we failed');
-	// 				throw err;
-	// 			}
-	// 		});
-
-	// 		// console.log(responseMsg)
-	// 		io.emit('chat message', responseMsg);
-	// 	});
-	// 	round++;
-
-	// });
+	socket.on('start game', function () {
+		socket.emit('advance to: standby');
+	});
 });
-
+// --------------------------------------------------------
+// Show me da wae
+// --------------------------------------------------------
 http.listen(port, function () {
 	console.log(`listening on /:${port}`);
 });

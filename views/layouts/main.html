@@ -13,27 +13,46 @@
 
 <body>
 	{% block body %}{% endblock %}
+	<form hidden></form>
 	<script>
 		document.addEventListener('DOMContentLoaded', function () {
+			// this is our global variable
+			thunkidm = {
+				global: true, // this doesn't serve any purpose
+				socket: null,
+				ctaButtons: null
+			};
 
-			socket = io();
-			let ctaButtons = document.querySelectorAll('section.cta button');
+			thunkidm.socket = io();
+			thunkidm.ctaButtons = document.querySelectorAll('section.cta button');
+			let form = document.querySelector('form');
 
-			for (let button of ctaButtons) {
-				button.addEventListener('click', (e) => {
-					socket.emit(button.dataset.socketEmit);
-					// this reads the data-socket-emit attribute and sends
-					// its value as a socket event to the server
-				})
+			let handleFormSubmit = (__form, __eventCode) => {
+				let formDataEntries = Object.fromEntries(new FormData(__form).entries());
+				thunkidm.socket.emit(__eventCode, formDataEntries);
 			}
 
-			socket.on('test', (data) => {
-				console.log(data);
-			})
+			for (let button of thunkidm.ctaButtons) {
+				button.addEventListener('click', (e) => {
+					handleFormSubmit(form, button.dataset.socketEmit);
+				});
+			}
+
+			form.addEventListener('submit', (e) => {
+				e.preventDefault();
+				// TODO: Add form submission for correct socket event
+				return false;
+			});
+
+			thunkidm.socket.emit('send device id', localStorage.getItem('deviceID'));
+
+			thunkidm.socket.on('store device id', function (__deviceID) {
+				localStorage.setItem('deviceID', __deviceID);
+			});
 		});
 	</script>
 
 	{% block postScript %}{% endblock %}
 </body>
-
+<form hidden></form>
 </html>

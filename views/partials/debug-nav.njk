@@ -1,6 +1,7 @@
 {# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
 {% set views=['index', 'join', 'nickname', 'host-instructions', 'waiting-room', 'standby', 'prompt'] %}
 <div class="debug-nav-container">
+	<button class="plus-button" onclick="toggleDebugNav()">+</button>
 	<div class="debug-nav">
 		<select id="views-list" name="viewsList">
 			{% for view in views %}
@@ -9,7 +10,6 @@
 		</select>
 		<button class="submit-button" onclick="runDebugNav()">Go!</button>
 	</div>
-	<button class="plus-button" onclick="toggleDebugNav()">+</button>
 
 	<script>
 	/**

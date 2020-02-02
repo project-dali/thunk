@@ -25,7 +25,7 @@
 
 .debug-nav-container {
     position:absolute;
-    top:100vh; right: 0;
+    top:100vh; left: 0;
     transform:translateY(-100%);
     z-index: 10;
 }

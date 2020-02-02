@@ -37,7 +37,7 @@ app.get('/', function (req, res) {
 // Grabs the name of the view from the request, stores it in a variable, and then renders the correct Nunjucks file from that variable.
 app.get('/:view', function (req, res) {
 	let view = req.params.view;
-	res.render(view + '.njk');
+	if(view !== 'favicon.ico') res.render(view + '.njk');
 });
 
 // --------------------------------------------------------

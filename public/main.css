@@ -98,7 +98,7 @@ button {
     box-shadow: none;
     border: none;
 
-    background-color: var(--gray-bg-color, LightGrey);
+    background-color: var(--gray-bg-color);
     font-size: 2.5rem;
     margin: 2rem 0;
     padding: 1rem 3rem;
@@ -108,16 +108,16 @@ button:hover,
 button:active,
 button:focus {
     cursor: pointer;
-    background-color: var(--gray-bg-hover, gray);
+    background-color: var(--gray-bg-hover);
 }
 
 button:focus {
-    outline: 5px solid var(--thunk-pink, pink);
+    outline: 5px solid var(--thunk-pink);
 }
 
 /* Applies a gray background to the element */
 .box-gray {
-    background-color: var(--gray-bg-color, LightGrey);
+    background-color: var(--gray-bg-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,8 +125,26 @@ button:focus {
     text-align: center;
 }
 
-.box-gray * {
+/* .box-gray * {
     margin: 0;
+    text-align: center;
+} */
+
+.prompt {
+    background-color: var(--gray-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+}
+
+.switch-up-text {
+    background-color: var(--gray-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
     text-align: center;
 }
 
@@ -161,9 +179,36 @@ button:focus {
     background-color: var(--thunk-pink, pink);
 }
 
+.round-start-counter {
+    --round-counter-size: 4rem;
+    background-color: var(--gray-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--round-counter-size);
+    height: var(--round-counter-size);
+    border-radius: 50%;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 40rem) {
+    main {
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .switch-up p, .switch-up-text {
+        font-size: 1.5rem;
+    }
+}
+
 /* ! Code from alpha static ------------------------------------ */
 
-#instructions {
+/*#instructions {
     max-width: 49.375rem;
 }
 
@@ -174,7 +219,7 @@ button:focus {
 
 #code,
 #prompt {
-    /* min-width: 40rem; */
+    /~ min-width: 40rem; ~/
     max-width: 60rem;
 }
 
@@ -212,7 +257,7 @@ button:focus {
     border-radius: 50%;
 }
 
-/* ! Remove this once avatar selection feauture is created */
+/~ ! Remove this once avatar selection feauture is created ~/
 #player-1>.pl-avi {
     background-color: var(--pl-red, Red);
 }
@@ -245,7 +290,7 @@ button:focus {
     background-color: var(--pl-purple, Purple);
 }
 
-/* ! ------------------------------------------------- */
+/~ ! ------------------------------------------------- ~/
 
 .pl-name {
     font-weight: bold;
@@ -356,7 +401,7 @@ button:focus {
 
 #pl-winner {
     margin-top: 10rem;
-    /* justify-self: center does not work for flex, find solution to vertically center */
+    /~ justify-self: center does not work for flex, find solution to vertically center ~/
 }
 
 #pl-winner .player {
@@ -412,7 +457,7 @@ button:focus {
     list-style: none;
 }
 
-/* * -------- Player Screen Styles -------- */
+/~ * -------- Player Screen Styles -------- ~/
 @media screen and (max-width: 26rem) {
     h1 {
         font-size: 3.5rem;
@@ -453,7 +498,7 @@ button:focus {
     input[type=submit] {
         width: 15rem;
 
-        /* Clear defaults */
+        /~ Clear defaults ~/
         background: none;
         box-shadow: none;
         border: none;
@@ -484,7 +529,7 @@ button:focus {
         position: relative;
         width: var(--avi-sel-size);
         height: var(--avi-sel-size);
-        /* background-color: #000; */
+        /~ background-color: #000; ~/
         cursor: pointer;
         -webkit-user-select: none;
         -moz-user-select: none;
@@ -492,7 +537,7 @@ button:focus {
         user-select: none;
     }
 
-    /* Hide browswer default radio */
+    /~ Hide browswer default radio ~/
     .avi-opt input {
         position: absolute;
         opacity: 0;
@@ -501,7 +546,7 @@ button:focus {
         width: 0;
     }
 
-    /* Create custom radio */
+    /~ Create custom radio ~/
     .avi-check {
         position: absolute;
         top: 0;
@@ -677,7 +722,7 @@ button:focus {
         width: 14rem;
     }
 
-    /* Hide browser default checkboxes */
+    /~ Hide browser default checkboxes ~/
     .resp-opt input {
         position: absolute;
         opacity: 0;
@@ -766,4 +811,4 @@ button:focus {
     .player-rank .pl-name {
         font-size: 1.5rem;
     }
-}
+}*/

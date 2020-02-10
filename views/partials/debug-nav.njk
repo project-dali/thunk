@@ -1,39 +1,42 @@
 {# Creates an array of all views on the screen we need for debugging. Any time a new view is made, add it to this array. #}
-{% set views=['index', 'join', 'nickname', 'host-instructions', 'waiting-room', 'standby', 'prompt'] %}
+{% set views=['index', 'join', 'nickname', 'host-instructions', 'waiting-room', 'standby', 'prompt',
+	'pl-prompt'] %}
 <div class="debug-nav-container">
-	<button class="plus-button" onclick="toggleDebugNav()">+</button>
-	<div class="debug-nav">
-		<select id="views-list" name="viewsList">
-			{% for view in views %}
-			<option value='{{view}}'>{{view}}</option>
-			{% endfor %}
-		</select>
-		<button class="submit-button" onclick="runDebugNav()">Go!</button>
-	</div>
+		<button class="plus-button" onclick="toggleDebugNav()">+</button>
+		<div class="debug-nav">
+				<select id="views-list" name="viewsList">
+						{% for view in views %}
+								<option value='{{view}}'>{{view}}</option>
+						{% endfor %}
+				</select>
+				<button class="submit-button" onclick="runDebugNav()">Go!</button>
+		</div>
 
-	<script>
-	/**
+		<script>
+				/**
 	* Shows or hides the Navigation form for use during debugging
 	* @returns bool is the Debug Nav now being shown?
 	*/
-	function toggleDebugNav(){
-		var debugForm = document.getElementsByClassName('debug-nav')[0];
-		if(debugForm.style.display == "inline") {
-			// if is shown, hide it
-			debugForm.style.display = "none";
-			return false;
-		} else {
-			// if is hidden, show it
-			debugForm.style.display = "inline";
-			return true;
-		}
-	}
+				function toggleDebugNav() {
+						var debugForm = document.getElementsByClassName('debug-nav')[0];
+						if (debugForm.style.display == "inline") {
+								// if is shown, hide it
+								debugForm.style.display = "none";
+								return false;
+						} else {
+								// if is hidden, show it
+								debugForm.style.display = "inline";
+								return true;
+						}
+				}
 
-	// Runs the Debug form, used for debugging when the user needs to visit a page directly to test / see it. DELETE BEFORE FINAL (MARCH) COMMIT!
-	function runDebugNav(){
-		let view = document.getElementById('views-list');
-		view = view.options[view.selectedIndex].value;
-		window.location.href=view;
-	};
-	</script>
+				// Runs the Debug form, used for debugging when the user needs to visit a page directly to test / see it. DELETE BEFORE FINAL (MARCH) COMMIT!
+				function runDebugNav() {
+						let view = document.getElementById('views-list');
+						view = view
+								.options[view.selectedIndex]
+								.value;
+						window.location.href = view;
+				};
+		</script>
 </div>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Screen Layout</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+
+    <style>
+@font-face{
+   font-family:McLaren; 
+   src: url(McLaren-Regular.ttf)
+ }
+
+html{
+    height: 100%;
+}
+
+body{
+    background: linear-gradient(180deg, #201F5C 0%, #0F1234 100%);
+}
+
+.bodytext{
+    position: relative;
+margin-left: auto;
+margin-right: auto;
+width: 233px;
+height: 44px;
+top: 115px;
+
+font-family: McLaren;
+font-style: normal;
+font-weight: normal;
+font-size: 18px;
+line-height: 124.99%;
+/* or 22px */
+
+text-align: center;
+
+color: #FFFFFF;
+
+}
+
+/* text for avatar name */
+.avatarnames{
+    font-family: Avenir Next, 'Lato', sans-serif;
+    position: relative;
+margin-left: auto;
+margin-right: auto;
+top: 150px;
+width: 286px;
+height: 45px;
+font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 124.99%;
+/* identical to box height, or 45px */
+
+text-align: center;
+
+color: #FFFFFF;
+
+}
+
+/* highlighted circle behind avatar */
+.circle{
+    position: relative;
+margin-left: auto;
+margin-right: auto;
+top: 140px;
+border-radius: 50%;
+    width: 187px;
+height: 187px;
+background: rgba(237, 25, 104, 0.5);
+}
+
+
+img.avatar{
+    display: block;
+    text-align: center;
+margin: auto;
+padding-top: 34px;
+width: 118px;
+height: 118px;
+}
+
+    </style>
+</head>
+<body>
+    
+ <p class="bodytext"> Waiting for<br>players to join...</p>
+
+<div class="circle">
+
+    <img class="avatar" src="fiddy.svg" alt="Yo, it's Fiddy!">
+
+</div>
+
+<p class="avatarnames">Fiddy</p>
+
+</body>
+</html>

@@ -4,6 +4,8 @@
 @import url("imports/background.css");
 @import url("imports/banner.css");
 @import url("imports/footer.css");
+@import url("imports/buttons.css");
+@import url("imports/timers.css");
 
 * {
     margin: 0;

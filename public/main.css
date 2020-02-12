@@ -1,6 +1,9 @@
 /*  How to import all CSS files:  */
 /* @import url("imports/**.css"); */
 @import url("imports/debug-nav.css");
+@import url("imports/background.css");
+@import url("imports/banner.css");
+@import url("imports/footer.css");
 
 * {
     margin: 0;
@@ -37,7 +40,7 @@ html {
 body {
     width: 100%;
     height: auto;
-    background-color: #fff;
+    /* background-color: #fff; */
 }
 
 h1,
@@ -45,9 +48,11 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
     font-weight: bold;
     text-align: center;
+    color: white;
 }
 
 h1 {
@@ -138,13 +143,18 @@ button:focus {
 }
 
 .room-code-display {
-    position:absolute;
-    top:100vh; right: 0;
-    transform:translateY(-100%);
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    top: 104vh;
+    right: 0;
+    transform: translateY(-100%);
     font-size: 1.5rem;
     font-weight: bold;
     display: flex;
     flex-direction: column;
+    border-radius: 200px;
+    background-color: var(--thunk-pink);
 }
 
 .round-progress-bar {

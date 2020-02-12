@@ -166,6 +166,7 @@ button:focus {
 }
 
 .round-progress-bar {
+    background-color: var(--gray-bg-color);
     width: 80vw;
     max-width: 60rem;
     height: 3rem;
@@ -174,6 +175,7 @@ button:focus {
 }
 
 .timer-bar {
+    display: inline-block;
     height: 100%;
     width: 100%;
     background-color: var(--thunk-pink, pink);
@@ -190,6 +192,29 @@ button:focus {
     border-radius: 50%;
     font-size: 2rem;
     font-weight: bold;
+}
+
+.primary {
+    width: 90%;
+}
+
+.submitted-responses {
+    width: 80%;
+    margin: 2rem auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-gap: 1em;
+}
+
+.response {
+    background-color: var(--gray-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*! height: 2rem; */
+    font-size: 1.5em;
+    text-align: center;
+    padding: .5em;
 }
 
 @media screen and (max-width: 40rem) {

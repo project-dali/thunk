@@ -6,6 +6,9 @@
 @import url("imports/footer.css");
 @import url("imports/buttons.css");
 @import url("imports/timers.css");
+@import url("imports/system-status.css");
+@import url("imports/hosting-instructions.css");
+@import url("imports/closed-captions.css");
 
 * {
     margin: 0;

@@ -198,6 +198,10 @@ button:focus {
     width: 90%;
 }
 
+.response-select {
+    margin: 0 auto;
+}
+
 .submitted-responses {
     width: 80%;
     margin: 2rem auto 0;
@@ -217,17 +221,91 @@ button:focus {
     padding: .5em;
 }
 
+label.response {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    margin: .5rem auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 14rem;
+}
+
+  /* Hide browser default checkboxes */
+.response input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.response-checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: none;
+}
+
+.response input:checked ~ .response-checkbox {
+    border: 3px solid var(--thunk-pink);
+}
+
+input[type=submit] {
+    display: block;
+    width: 100%;
+    margin: 0 auto;
+
+    /* Clear defaults */
+    background: none;
+    box-shadow: none;
+    border: none;
+
+    background-color: var(--gray-bg-color);
+    font-size: 2rem;
+    padding: .5rem;
+
+    grid-column: 2/4;
+}
+
+input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
+    outline: 3px solid var(--thunk-pink);
+    cursor: pointer;
+    background-color: var(--gray-bg-hover);
+}
+
 @media screen and (max-width: 40rem) {
     main {
         padding: 2rem;
+        height: 100vh;
+        overflow-y: hidden;
+        position: relative;
     }
 
     h1 {
         font-size: 2rem;
     }
 
+    .primary {
+        overflow-y: scroll;
+        width: 100%;
+    }
+
     .switch-up p, .switch-up-text {
         font-size: 1.5rem;
+    }
+
+    .submitted-responses {
+        display: block;
+        width: 100%;
+    }
+
+    input[type=submit] {
+        width: 80%;
     }
 }
 

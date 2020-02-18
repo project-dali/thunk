@@ -193,7 +193,7 @@ button:focus {
     max-width: 60rem;
     height: 3rem;
     padding: 0;
-    margin-top: 3em;
+    margin: 3rem auto 0;
 }
 
 .timer-bar {
@@ -298,6 +298,100 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     outline: 3px solid var(--thunk-pink);
     cursor: pointer;
     background-color: var(--gray-bg-hover);
+}
+
+#connected-players {
+    max-width: 90%;
+    height: 17rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.player {
+    width: 8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 1rem;
+}
+
+.pl-avi {
+    --avi-size: 5.25rem;
+    content: "";
+    display: block;
+    width: var(--avi-size);
+    height: var(--avi-size);
+    background-color: #000;
+    margin-bottom: .25rem;
+    border-radius: 50%;
+}
+
+/* ! Remove this once avatar selection feauture is created */
+#player-1>.pl-avi {
+    background-color: var(--pl-red, Red);
+}
+
+#player-2>.pl-avi {
+    background-color: var(--pl-orange, Orange);
+}
+
+#player-3>.pl-avi {
+    background-color: var(--pl-yellow, Yellow);
+}
+
+#player-4>.pl-avi {
+    background-color: var(--pl-green, Green);
+}
+
+#player-5>.pl-avi {
+    background-color: var(--pl-blue, Blue);
+}
+
+#player-6>.pl-avi {
+    background-color: var(--pl-mediumBlue, CornflowerBlue);
+}
+
+#player-7>.pl-avi {
+    background-color: var(--pl-lightGreen, LightGreen);
+}
+
+#player-8>.pl-avi {
+    background-color: var(--pl-purple, Purple);
+}
+
+ /* ! -------------------------------------------------  */
+
+.pl-name {
+    font-weight: bold;
+}
+
+.hightlighted-player {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}   
+
+.player-avatar {
+    --avatar-size: 16rem;
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: 50%;
+    background-color: var(--pl-green);
+}
+
+.player-answer {
+    background-color: var(--gray-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 3em;
 }
 
 @media screen and (max-width: 40rem) {

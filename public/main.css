@@ -392,6 +392,7 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     text-align: center;
     font-weight: bold;
     font-size: 3em;
+    margin-top: 1rem;
 }
 
 @media screen and (max-width: 40rem) {

@@ -115,6 +115,10 @@ button:focus {
     outline: 5px solid var(--thunk-pink);
 }
 
+.landing-instructions {
+    text-align: center;
+}
+
 /* Applies a gray background to the element */
 .box-gray {
     background-color: var(--gray-bg-color);

@@ -1,0 +1,48 @@
+{% extends "layouts/main.html" %}
+
+{% block body %}
+<div role="banner" class="banner">
+	<!-- flowy background -->
+</div>
+<main>
+	<section class="primary">
+		<div class="response-prompt">
+			<h1>Pumpkins are classified as a fruit.</h1>
+			<div class="switch-up">
+				<p>BUT</p>
+				<h2 class="switch-up-text">Every answer must include the word &quot;cow&quot;</h2>
+			</div>
+		</div>
+		<div class="response-display">
+			<div class="response">
+				<p>The cow says no</p>
+			</div>
+			<div class="response">
+				<p>The cow says no</p>
+			</div>
+			<div class="response">
+				<p>The cow says no</p>
+			</div>
+			<div class="response">
+				<p>The cow says no</p>
+			</div>
+		</div>
+		<form action="">
+			<input type="text" name="response-submission" id="response-submission" autofocus>
+			<!-- ! According to MDM autofocus is bad to use for accessiblity reasons (scree readers "teleport" the the element without warning), maybe consider using javascript to automatically focus on the input -->
+		</form>
+
+	</section>
+	<section class="cta">
+		<!-- if the primary section is a description, calls to action go here -->
+		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		{% include "partials/debug-nav.njk" %}
+	</section>
+	<section role="status" class="system-status">
+		<!-- non-interactive system feedback -->
+	</section>
+</main>
+{% endblock %}
+
+{% block postScript %}
+{% endblock %}

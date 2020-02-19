@@ -1,26 +1,23 @@
 {% extends "layouts/main.html" %}
 
 {% block body %}
-<div role="banner" class="banner">
-	<!-- flowy background -->
-</div>
-<main>
-	<section class="cta">
-		<!-- if the primary section is a description, calls to action go here -->
-		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
-		{% include "partials/debug-nav.njk" %}
-	</section>
-	<section role="status" class="system-status">
-		<!-- non-interactive system feedback -->
-		<div class="closed-captions">
-		<h3>Hey, it’s your boy, Bill.  Welcome to Thunk! 
-		 I’m MC and this is where my subtitles will be.  </h3>
-			<!-- narration captions -->
+		<div role="banner" class="banner">
+				<!-- flowy background -->
 		</div>
-		{% include "partials/room-code-display.njk" %}
-	</section>
-</main>
+		<main>
+				<section class="cta">
+						<!-- if the primary section is a description, calls to action go here -->
+						{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+						{% include "partials/debug-nav.njk" %}
+				</section>
+				<section role="status" class="system-status">
+						<!-- non-interactive system feedback -->
+						<div class="closed-captions">
+								<p>Test narration closed captioning that will appear on the bottom of the screen.</p>
+						</div>
+						{% include "partials/room-code-display.njk" %}
+				</section>
+		</main>
 {% endblock %}
 
-{% block postScript %}
-{% endblock %}
+{% block postScript %}{% endblock %}

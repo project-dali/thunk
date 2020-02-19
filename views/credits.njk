@@ -1,0 +1,129 @@
+{% extends "layouts/main.html" %}
+
+{% block body %}
+<div role="banner" class="banner">
+	<!-- flowy background -->
+</div>
+<main class="credit-container">
+	<header class="title">
+		<!-- current page title or system prompt/feedback -->
+		<h1>Thunk</h1>
+	</header>
+	<section class="primary">
+		<!-- description of main header, or forms/primary interactions -->
+		<div class="credits">
+			<h2>Credits</h2>
+			<ul class="team-members">
+				<li class="member">Erik Martus
+					<ul class="member-roles">
+						<li>Project Manager</li>
+						<li>Front End Development Lead</li>
+						<li>User Researcher</li>
+						<li>User Interface Designer</li>
+					</ul>
+				</li>
+				<li class="member">Ben Schenerman
+					<ul class="member-roles">
+						<li>Assistant Project Manager</li>
+						<li>Back End Development Lead</li>
+						<li>User Researcher</li>
+					</ul>
+				</li>
+				<li class="member">Beck Rivera
+					<ul class="member-roles">
+						<li>Back End Developer</li>
+						<li>Game Mechanics Designer</li>
+						<li>User Researcher</li>
+					</ul>
+				</li>
+				<li class="member">Brianna Buissereth
+					<ul class="member-roles">
+						<li>Design Lead</li>
+						<li>User Interface Designer</li>
+						<li>Interaction Designer</li>
+						<li>User Researcher</li>
+					</ul>
+				</li>
+				<li class="member">Arpit Ahluwalia
+					<ul class="member-roles">
+						<li>User Interface Designer</li>
+						<li>Interaction Designer</li>
+						<li>User Researcher</li>
+						<li>User Experience Designer</li>
+						<li>Front End Developer</li>
+					</ul>
+				</li>
+				<li class="member">Fidel Boamah
+					<ul class="member-roles">
+						<li>User Interface Designer</li>
+						<li>Interaction Designer</li>
+						<li>User Researcher</li>
+						<li>User Experience Designer</li>
+						<li>Front End Developer</li>
+					</ul>
+				</li>
+				<li class="member">Ben Murray
+					<ul class="member-roles">
+						<li>User Interface Designer</li>
+						<li>Interaction Designer</li>
+						<li>User Researcher</li>
+						<li>User Experience Designer</li>
+						<li>Front End Developer</li>
+					</ul>
+				</li>
+				<li class="member">Jacob Long
+					<ul class="member-roles">
+						<li>Script Writer</li>
+					</ul>
+				</li>
+				<li class="member">Neil Mancuso
+					<ul class="member-roles">
+						<li>Sound Designer</li>
+					</ul>
+				</li>
+				<li class="member">Ryan Do
+					<ul class="member-roles">
+						<li>Narrator</li>
+					</ul>
+				</li>
+				<li class="member">Troy Finamore
+					<ul class="member-roles">
+						<li>Faculty Advisor</li>
+					</ul>
+				</li>
+			</ul>
+			<div class="acknowledgements">
+				<h3>Special Thanks</h3>
+				<p><b>All of our familes</b> for funding our college endeavors</p>
+				<p><b>Troy Finamore</b> for his investment of &#36;1.00</p>
+			</div>
+		</div>
+	</section>
+	<section class="cta">
+		<!-- if the primary section is a description, calls to action go here -->
+		<button data-socket-emit="new game">New Game</button>
+		<button data-socket-emit="new players">New Players</button>
+		{# A form used for directin. DELETE BEFORE FINAL (MARCH) COMMIT! #}
+		{% include "partials/debug-nav.njk" %}
+	</section>
+	<section role="status" class="system-status">
+		<!-- non-interactive system feedback -->
+		<div class="closed-captions">
+			<!-- narration captions -->
+		</div>
+		{% include "partials/room-code-display.njk" %}
+	</section>
+</main>
+{% endblock %}
+
+{% block postScript %}
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		thunkidm
+			.socket
+			.on('advance to: waiting room', () => {
+				window.location.href = 'waiting-room';
+			})
+	});
+</script>
+{% endblock %}

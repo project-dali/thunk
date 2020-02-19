@@ -360,11 +360,13 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
 }
 
 .score-standings {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* display: grid;
+    grid-template-columns: repeat(2, 1fr); */
+    columns: 2;
     width: 40rem;
     margin: 2rem auto 0;
-    grid-gap: 1rem;
+    /* grid-gap: 1rem; */
+    margin-bottom: 1rem;
 }
 
 ol {
@@ -563,6 +565,11 @@ input[type=text]:invalid {
 
     input[type=submit] {
         width: 80%;
+    }
+
+    .score-standings {
+        columns: 1;
+        width: unset;
     }
 }
 

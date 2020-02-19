@@ -481,6 +481,18 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     margin-bottom: 1rem;
 }
 
+.selected-avatar .player {
+    margin: 0 auto;
+    width: unset;
+}
+
+.selected-avatar .pl-avi {
+    --avi-size: 12rem;
+}
+
+.selected-avatar .pl-name {
+    font-size: 2em;
+}
 
 @media screen and (max-width: 40rem) {
     main {

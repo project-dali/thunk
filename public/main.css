@@ -418,6 +418,70 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     font-size: 1.25rem;
 }
 
+.credit-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: 0;
+}
+
+.credit-container .title {
+    align-self: end;
+}
+
+.credit-container .primary {
+    background-color: var(--gray-bg-color);
+    grid-column: 1/2;
+    grid-row: 1/3;
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+}
+
+.credit-container .cta {
+    align-self: start;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.credits {
+    animation: 40s linear 3s infinite credit-crawl;
+    transform: translateY(100vh);
+}
+
+@keyframes credit-crawl {
+    from { transform: translateY(100vh); }
+    to   { transform: translateY(-150vh);}
+}
+
+
+.member {
+    list-style: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: right;
+    margin-bottom: 1em;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 1.5rem;
+}
+
+.member-roles {
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: normal;
+    list-style: none;
+}
+
+.acknowledgements {
+    text-align: center;
+}
+
+.acknowledgements > h3 {
+    margin-bottom: 1rem;
+}
+
+
 @media screen and (max-width: 40rem) {
     main {
         padding: 2rem;

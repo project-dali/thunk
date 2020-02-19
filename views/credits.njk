@@ -101,8 +101,8 @@
 	</section>
 	<section class="cta">
 		<!-- if the primary section is a description, calls to action go here -->
-		<button id="new-game">New Game</button>
-		<button id="new-players">New Players</button>
+		<button data-socket-emit="new game">New Game</button>
+		<button data-socket-emit="new players">New Players</button>
 		{# A form used for directin. DELETE BEFORE FINAL (MARCH) COMMIT! #}
 		{% include "partials/debug-nav.njk" %}
 	</section>

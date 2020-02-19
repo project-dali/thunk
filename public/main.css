@@ -362,27 +362,34 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
 .score-standings {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    list-style: none;
-    counter-reset: thunk-counter;
     width: 40rem;
     margin: 2rem auto 0;
     grid-gap: 1rem;
 }
 
-.score-standings>li {
-    counter-increment: thunk-counter;
-    position: relative;
-    margin-left: 1.5rem;
+ol {
+    list-style: none;
+    counter-reset: thunk-counter;
 }
 
-.score-standings>li::before {
+ol>li {
+    --counter-size: 1.75rem;
+    counter-increment: thunk-counter;
+    position: relative;
+    margin-left: calc(var(--counter-size) + .75rem);
+    min-height: var(--counter-size);
+    display: flex;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+ol>li::before {
     content: counter(thunk-counter);
     color: #fff;
     font-size: 1.25rem;
     font-weight: bold;
     position: absolute;
-    --counter-size: 1.75rem;
-    left: calc(-1 * var(--counter-size) + .5rem);
+    left: calc(-1 * var(--counter-size) - .75rem);
     line-height: var(--counter-size);
     width: var(--counter-size);
     height: var(--counter-size);
@@ -402,6 +409,7 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     width: 16rem;
     grid-gap: 0.5rem;
     align-items: unset;
+    margin-left: 0;
 }
 
 .score-standings .pl-avi {
@@ -494,6 +502,27 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     font-size: 2em;
 }
 
+input[type=text] {
+    width: calc(100% - 4px); /* Width derived from accouting for focus outline */
+    height: 2.625rem;
+    background-color: var(--gray-bg-color, LightGrey);
+    border: none;
+    border: 2px solid #000;
+
+    text-align: center;
+    font-size: 1.5rem;
+    position: relative;
+    margin: 1rem auto;
+}
+
+input[type=text]:focus {
+    outline: 3px solid #000;
+}
+
+input[type=text]:invalid {
+    outline: 4px solid var(--pl-red, red);
+}
+
 @media screen and (max-width: 40rem) {
     main {
         padding: 2rem;
@@ -504,6 +533,18 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
 
     h1 {
         font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    h3 {
+        font-size: 1.5rem;
+    }
+
+    button {
+        font-size: 1.75rem;
     }
 
     .primary {

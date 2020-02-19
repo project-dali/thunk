@@ -89,7 +89,7 @@ h3 {
 }
 
 main {
-    --main-padding: 3rem;
+    --main-padding: 15rem;
     height: 100%;
     width: 100%;
     display: flex;

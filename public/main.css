@@ -1,3 +1,17 @@
+/* @font-face {
+    font-family: "Avenir Next";
+    src: url("static/fonts/AvenirNextLTPro-Regular.woff2"),
+         url("static/fonts/AvenirNextLTPro-Regular.woff");
+    font-weight: 400;
+} */
+
+/* @font-face {
+    font-family: "Avenir Next";
+    src: url("fonts/AvenirNextLTPro-Bold.woff2"),
+         url("fonts/AvenirNextLTPro-Bold.woff");
+    font-weight: bold;
+} */
+
 /*  How to import all CSS files:  */
 /* @import url("imports/**.css"); */
 @import url("imports/debug-nav.css");

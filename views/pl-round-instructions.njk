@@ -11,9 +11,9 @@
 	</header>
 	<section class="primary">
 		<div class="round-title">
-			<h2>Think Twice</h2>
+			<h2 class="think-twice">Think Twice</h2>
 		</div>
-		<ol>
+		<ol class="instructions">
 			<li>Type in any associations you can make with the prompt.</li>
 			<li>Relate it to a unique switch-up in every round!</li>
 			<li>Select your favorite 2 answers to put up for everyone to vote on.</li>
@@ -21,7 +21,7 @@
 	</section>
 	<section class="cta">
 		<h3>Everbody's in?</h3>
-		<button data-socket-emit="start game">Start Game</button>
+		<button data-socket-emit="start game" class="ready">I'm Ready</button>
 		<!-- if the primary section is a description, calls to action go here -->
 		{# A form used for directing oneself between all the views of the program. Used for debugging. DELETE BEFORE FINAL (MARCH) COMMIT! #}
 		{% include "partials/debug-nav.njk" %}

@@ -11,6 +11,7 @@
 @import url("imports/closed-captions.css");
 @import url("imports/pl-round-instructions.css");
 @import url("imports/join.css");
+@import url("imports/ranking.css");
 
 * {
     margin: 0;
@@ -376,13 +377,13 @@ input[type=submit]:hover, input[type=submit]:active, input[type=submit]:focus {
     margin-top: 1rem;
 }
 
-.score-standings {
-    /* display: grid;
-    grid-template-columns: repeat(2, 1fr); */
+/*.score-standings {
+    /~ display: grid;
+    grid-template-columns: repeat(2, 1fr); ~/
     columns: 2;
     width: 40rem;
     margin: 2rem auto 0;
-    /* grid-gap: 1rem; */
+    /~ grid-gap: 1rem; ~/
     margin-bottom: 1rem;
 }
 
@@ -443,7 +444,7 @@ ol>li::before {
 
 .score-standings .pl-score {
     font-size: 1.25rem;
-}
+}*/
 
 .credit-container {
     display: grid;

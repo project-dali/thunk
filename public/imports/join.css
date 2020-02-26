@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=McLaren&display=swap');
 
-h1 { 
+.welcome { 
 position: absolute;
 top: 200px;
 left: 75px;

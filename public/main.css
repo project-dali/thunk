@@ -11,6 +11,8 @@
          url("fonts/AvenirNextLTPro-Bold.woff");
     font-weight: bold;
 } */
+@import url('https://fonts.googleapis.com/css?family=McLaren&display=swap');
+
 
 /*  How to import all CSS files:  */
 /* @import url("imports/**.css"); */
@@ -23,8 +25,8 @@
 @import url("imports/system-status.css");
 @import url("imports/hosting-instructions.css");
 @import url("imports/closed-captions.css");
-@import url("imports/pl-round-instructions.css");
-@import url("imports/join.css");
+@import url("imports/round-instructions.css");
+@import url("imports/join-form.css");
 @import url("imports/ranking.css");
 
 * {

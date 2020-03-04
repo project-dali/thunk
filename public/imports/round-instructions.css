@@ -1,0 +1,80 @@
+
+/* Round Instructions */
+
+.title { 
+position: absolute;
+width: 18rem;
+height: 4rem;
+left: 4rem;
+top: 4.875rem;
+font-family: Avenir Next, 'Lato', sans-serif;
+font-weight: bold;
+font-size: 2rem;
+line-height: 2rem;
+text-align: center;
+color: #FFFFFF;
+} 
+
+.round-title { 
+position: absolute;
+width: 11rem;
+height: 3.2rem;
+left: 7.5rem;
+top: 10rem;
+background: #ED1D69;
+border-radius: 1.5rem;
+}
+
+.think-twice { 
+position: absolute;
+width: 8rem;
+height: 1.4rem;
+left: 1.5rem;
+top: 1rem;
+font-family: Avenir Next, 'Lato', sans-serif;
+font-weight: bold;
+font-size: 1.25rem;
+line-height: 1.375rem;
+text-align: center;
+color: #FFFFFF;
+}
+
+.instructions { 
+position: absolute;
+width: 18.5rem;
+height: 25rem;
+left: 2.8rem;
+top: 16rem;
+}
+
+.cta { 
+position: absolute;
+width: 12.5rem;
+height: 2.625rem;
+left: 5.8rem;
+top: 32rem;
+}
+
+ol>li { 
+font-family: McLaren;
+font-style: normal;
+font-weight: normal;
+font-size: 1.25rem;
+line-height: 1.325rem;
+color: #F1F1F1;
+}
+
+.ready { 
+display: flex;
+justify-content: center;
+height: 3.5rem; 
+width: 15rem;
+background: #ED1B69;
+border-radius: 4.2rem;
+font-family: McLaren;
+font-weight: normal;
+font-size: 1.25rem;
+line-height: 1.75rem;
+text-align: center;
+color: white;
+}

@@ -1,10 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=McLaren&display=swap');
  
-.landing-instructions { 
+.hosting-instructions { 
     text-align: center;
-    font-family: 'Mclaren', cursive;
+    font-family: 'Mclaren';
     font-size: 1.2rem;
 }
-.landing-instructions>p>b { 
+.hosting-instructions>p>b { 
     color: var(--thunk-pink);
 }

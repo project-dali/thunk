@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=McLaren&display=swap');
 
 .system-status { 
     padding-top: 1.8rem;
-    font-family: 'Mclaren', cursive;
+    font-family: 'Mclaren';
 }
 .system-status>h3 { 
     font-size: 1.2rem;
